@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>GradePro</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block css_files %}
+{% endblock %}
+
+{% block content %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Register</button>
     </form>
-</body>
-</html>
+{% endblock %}
