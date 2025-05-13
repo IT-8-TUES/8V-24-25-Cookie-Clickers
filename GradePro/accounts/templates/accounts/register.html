@@ -4,12 +4,15 @@
 {% block title %}Register{% endblock %}
 
 {% block css_files %}
+<link rel="stylesheet" href="{% static "accounts/register.css" %}">
 {% endblock %}
 
 {% block content %}
+<div class="container">
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Register</button>
     </form>
+</div>
 {% endblock %}

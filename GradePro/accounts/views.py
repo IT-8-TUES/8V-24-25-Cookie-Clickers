@@ -8,7 +8,7 @@ from .models import StudentProfile, TeacherProfile
 class UserRegisterView(FormView):
     template_name = 'accounts/register.html'
     form_class = UserRegistrationForm
-    success_url = reverse_lazy('home')  # Change to your desired URL
+    success_url = reverse_lazy('')  # Change to your desired URL
 
     def form_valid(self, form):
         user = form.save(commit=False)
