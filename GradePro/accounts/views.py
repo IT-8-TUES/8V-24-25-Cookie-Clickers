@@ -1,5 +1,3 @@
-# accounts/views.py
-
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth import login
