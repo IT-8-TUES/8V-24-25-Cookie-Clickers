@@ -1,25 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Hover Profile</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{% static 'about_us/about_us.css' %}" />
   </head>
   <body>
     <div class="flexbox">
       <div class="profile">
         <div class="label">Константин 8В</div>
-        <img src="kosyo.jpg" alt="Kosyo" />
+        <img src="{% static 'about_us/kosyo.jpg' %}" alt="Kosyo" />
       </div>
 
       <div class="profile">
         <div class="label">Венцислав 8В</div>
-        <img src="venci.jpg" alt="Venci" />
+        <img src="{% static 'about_us/venci.jpg' %}" alt="Venci" />
       </div>
 
       <div class="profile">
         <div class="label">Кирил 8В</div>
-        <img src="kiro.jpg" alt="Kiro" />
+        <img src="{% static 'about_us/kiro.jpg  ' %}" alt="Kiro" />
       </div>
     </div>
   </body>
