@@ -1,4 +1,32 @@
-{% extends "base.html" %} {% load static %} {% block title %}Home{% endblock %}
-{% block css_files %} {% endblock %} {% block content %}
-<p>HOME PAGE</p>
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'classes/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Navigation Bar -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">GrAdesPro</div>
+        <div class="nav-links">
+            <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="home-content">
+    <p>Welcome to GrAdesPro</p>
+</div>
+
+<!-- JavaScript for redirection -->
+<script>
+    function goToAboutUs() {
+        window.location.href = "http://127.0.0.1:8000/info/aboutus";
+    }
+</script>
 {% endblock %}
