@@ -1,6 +1,6 @@
 # accounts/forms.py
 from django import forms
-from django.contrib.auth.models import User
+from . import models
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -11,5 +11,5 @@ class UserRegistrationForm(forms.ModelForm):
     user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES)
 
     class Meta:
-        model = User
+        model = models.Profile
         fields = ['first_name', 'last_name', 'email', 'password']
