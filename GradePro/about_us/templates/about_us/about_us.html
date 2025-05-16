@@ -1,17 +1,19 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hover Profile</title>
-    <link rel="stylesheet" href="{% static 'about_us/about_us.css' %}" />
-  </head>
-  <body>
+
+{% block title %}About us{% endblock %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'about_us/about_us.css' %}">
+{% endblock %}
+
+
+{% block content %}
     <div class="flexbox">
       <div class="profile">
         <div class="label">Константин 8В</div>
         <img src="{% static 'about_us/kosyo.jpg' %}" alt="Kosyo" />
-      </div>
+    </div>
 
       <div class="profile">
         <div class="label">Венцислав 8В</div>
@@ -19,9 +21,16 @@
       </div>
 
       <div class="profile">
-        <div class="label">Кирил 8В</div>
-        <img src="{% static 'about_us/kiro.jpg  ' %}" alt="Kiro" />
+            <div class="label">Кирил 8В</div>
+            <img src="{% static 'about_us/kiro.jpg' %}" alt="Kiro" />
+          </div>
       </div>
-    </div>
-  </body>
-</html>
+
+      <script>
+        function goToHome() {
+            window.location.href = "http://127.0.0.1:8000/";
+        }
+      </script>
+    
+    {% endblock %}
+ 
