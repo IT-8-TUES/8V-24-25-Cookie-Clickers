@@ -1,36 +1,65 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} {% load static %} 
+{% block title %}Aboutus{%endblock%} {% block css_files %}
+<link rel="stylesheet" href="{% static 'about_us/about_us.css' %}" />
+{% endblock %} {% block content %}
+<!-- ---------- HERO / TEAM ---------- -->
+<section id="team" class="about-hero">
+  <div class="hero-images">
+    <img
+      src="{% static 'about_us/kosyo.jpg' %}"
+      alt="Константин"
+      class="hero-img"
+    />
+    <img
+      src="{% static 'about_us/venci.jpg' %}"
+      alt="Венцислав"
+      class="hero-img"
+    />
+    <img src="{% static 'about_us/kiro.jpg'  %}" alt="Кирил" class="hero-img" />
+  </div>
 
-{% block title %}About us{% endblock %}
+  <div class="hero-tagline">
+    <h2>GrAdesPro – твоят електронен дневник</h2>
+    <p>
+    Какво ни прави специални? Ние сме екип от млади и амбициозни хора, които искат да
+      направят един по-удобен, интуитивен, модерен и иновативен електронен дневник.
+      С GrAdesPro можеш да виждаш различни статистики за успеха си, 
+      процентно напредъка си спрямо различните предмети и още много
+    </p>
+  </div>
+</section>
 
-{% block css_files %}
-<link rel="stylesheet" href="{% static 'about_us/about_us.css' %}">
-{% endblock %}
+<!-- ---------- BENEFITS ---------- -->
+<section id="benefits" class="about-features">
+  <article class="feature">
+    <h3>Организираност без усилия</h3>
+    <p>
+      Всички предмети и оценки се подреждат сами – няма нужда от тетрадки,
+      таблици и хаос.
+    </p>
+  </article>
 
+  <article class="feature">
+    <h3>Обратна връзка в реално време</h3>
+    <p>
+      Учителите нанасят резултатите, а ти ги виждаш веднага – без дълго чакане и
+      тревога.
+    </p>
+  </article>
 
-{% block content %}
-    <div class="flexbox">
-      <div class="profile">
-        <div class="label">Константин 8В</div>
-        <img src="{% static 'about_us/kosyo.jpg' %}" alt="Kosyo" />
-    </div>
+<article class="feature">
+  <h3>Свобода да следиш напредъка си</h3>
+  <p>
+    Независимо къде се намираш – в училище, вкъщи или по пътя – GrAdesPro е винаги с теб.
+    Можеш да провериш оценките си, да проследиш успеха си и да следиш отсъствията си
+    
+  </p>
+</article>
 
-      <div class="profile">
-        <div class="label">Венцислав 8В</div>
-        <img src="{% static 'about_us/venci.jpg' %}" alt="Venci" />
-      </div>
-
-      <div class="profile">
-            <div class="label">Кирил 8В</div>
-            <img src="{% static 'about_us/kiro.jpg' %}" alt="Kiro" />
-          </div>
-      </div>
-
-      <script>
+  <script>
         function goToHome() {
             window.location.href = "http://127.0.0.1:8000/";
         }
-      </script>
-    
-    {% endblock %}
- 
+      </script> 
+
+{% endblock %}
