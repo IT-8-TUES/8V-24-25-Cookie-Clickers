@@ -27,23 +27,15 @@ class UserRegisterView(FormView):
 class UserLoginView(FormView):
     template_name = 'accounts/login.html'
     form_class = UserLoginForm
-    
+
     def form_valid(self, form):
-        first_name=form.cleaned_data['first_name']
-        last_name=form.cleaned_data['last_name']
+        email = form.cleaned_data['email']
         password = form.cleaned_data['password']
-        
-        user = Profile.objects.filter(
-            first_name=first_name, 
-            last_name=last_name, 
-        ).first()
-        if user is None:
-            form.add_error(None, "Invalid first or last name!")
-            return self.form_invalid(form)
-        
-        if user.check_password(password):
+
+        user = authenticate(self.request, email=email, password=password)
+        if user is not None:
             login(self.request, user)
             return redirect('home_page')
         else:
-            form.add_error(None, "Невалидна парола.")
+            form.add_error(None, "Invalid email or password.")
             return self.form_invalid(form)

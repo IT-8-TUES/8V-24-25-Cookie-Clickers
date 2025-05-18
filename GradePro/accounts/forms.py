@@ -15,6 +15,5 @@ class UserRegistrationForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email', 'password']
         
 class UserLoginForm(forms.Form):
-    first_name = forms.CharField(label="Име")
-    last_name = forms.CharField(label="Фамилия")
-    password = forms.CharField(widget=forms.PasswordInput, label="Парола")
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
