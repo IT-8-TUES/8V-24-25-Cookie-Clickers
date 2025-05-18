@@ -15,7 +15,6 @@ class Profile(AbstractBaseUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    user_type = models.CharField(max_length=100, default="student")
 
     USERNAME_FIELD = 'email'
 

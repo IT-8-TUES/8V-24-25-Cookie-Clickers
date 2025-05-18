@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import StudentProfile, TeacherProfile
+from .models import StudentProfile, TeacherProfile, Profile
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
@@ -21,3 +21,5 @@ class TeacherProfileAdmin(admin.ModelAdmin):
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"
     full_name.short_description = 'Name'
+
+admin.site.register(Profile)

@@ -1,14 +1,14 @@
 from django.views.generic.edit import FormView
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.contrib.auth import login
-from django.contrib.auth.models import User
-from .forms import UserRegistrationForm
-from .models import StudentProfile, TeacherProfile
+from django.contrib.auth import login, authenticate
+from .forms import UserRegistrationForm, UserLoginForm
+from .models import StudentProfile, TeacherProfile, Profile
 
 class UserRegisterView(FormView):
     template_name = 'accounts/register.html'
     form_class = UserRegistrationForm
-    success_url = 'http://127.0.0.1:8000/'  
+    success_url = 'http://127.0.0.1:8000/account/login/'  
 
     def form_valid(self, form):
         user = form.save(commit=False)
@@ -20,6 +20,30 @@ class UserRegisterView(FormView):
             StudentProfile.objects.create(user=user)
         else:
             TeacherProfile.objects.create(user=user)
+        redirect('login')
 
-        login(self.request, user)
         return super().form_valid(form)
+     
+class UserLoginView(FormView):
+    template_name = 'accounts/login.html'
+    form_class = UserLoginForm
+    
+    def form_valid(self, form):
+        first_name=form.cleaned_data['first_name']
+        last_name=form.cleaned_data['last_name']
+        password = form.cleaned_data['password']
+        
+        user = Profile.objects.filter(
+            first_name=first_name, 
+            last_name=last_name, 
+        ).first()
+        if user is None:
+            form.add_error(None, "Invalid first or last name!")
+            return self.form_invalid(form)
+        
+        if user.check_password(password):
+            login(self.request, user)
+            return redirect('home_page')
+        else:
+            form.add_error(None, "Невалидна парола.")
+            return self.form_invalid(form)
