@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from .views import home_page, ClassCreateView
 
 urlpatterns = [
-    path("", views.home_page, name="home_page"),
+    path("", home_page, name="home_page"),
+    path("class_create/", ClassCreateView.as_view(), name="create_class"),
 ]

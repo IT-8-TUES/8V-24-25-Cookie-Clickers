@@ -1,26 +1,41 @@
 from django.views.generic.edit import FormView
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.contrib.auth import login
-from django.contrib.auth.models import User
-from .forms import UserRegistrationForm
-from .models import StudentProfile, TeacherProfile
+from django.contrib.auth import login, authenticate
+from .forms import UserRegistrationForm, UserLoginForm
+from .models import StudentProfile, TeacherProfile, Profile
 
 class UserRegisterView(FormView):
     template_name = 'accounts/register.html'
     form_class = UserRegistrationForm
-    success_url = 'http://127.0.0.1:8000/'  
+    success_url = 'http://127.0.0.1:8000/account/login/'  
 
     def form_valid(self, form):
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password'])
-        user.save()
 
         user_type = form.cleaned_data['user_type']
-        if user_type == 'student':
-            StudentProfile.objects.create(user=user)
+        if user_type == 'teacher':
+            user.is_teacher = True
         else:
-            
-            TeacherProfile.objects.create(user=user)
+            user.is_teacher = False
+        redirect('login')
+        user.save()
 
-        login(self.request, user)
         return super().form_valid(form)
+     
+class UserLoginView(FormView):
+    template_name = 'accounts/login.html'
+    form_class = UserLoginForm
+
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+
+        user = authenticate(self.request, email=email, password=password)
+        if user is not None:
+            login(self.request, user)
+            return redirect('home_page')
+        else:
+            form.add_error(None, "Invalid email or password.")
+            return self.form_invalid(form)
