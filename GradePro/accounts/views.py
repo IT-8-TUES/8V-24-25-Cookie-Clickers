@@ -19,6 +19,7 @@ class UserRegisterView(FormView):
         if user_type == 'student':
             StudentProfile.objects.create(user=user)
         else:
+            
             TeacherProfile.objects.create(user=user)
 
         login(self.request, user)
