@@ -1,8 +1,25 @@
 from django.db import models
-from accounts.models import StudentProfile
+from accounts.student_models import StudentProfile
+
+class School(models.Model):
+    name = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.name
 
 # Create your models here.
 class Class(models.Model):
     subject = models.CharField(max_length=50)
     students = models.ManyToManyField(StudentProfile, related_name='students')
+    school = models.ForeignKey(School, on_delete=models.CASCADE, default="SigmaSchoolTSTS", related_name='school')
+    
+    def __str__(self):
+        return f"{self.subject} в {self.school.name}"
+    
+class Grades(models.Model):
+    values = models.JSONField(default=list, blank=True)
+    school_class = models.ManyToManyField(Class, related_name="classes")
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name='student', null=True)
+ 
+
     

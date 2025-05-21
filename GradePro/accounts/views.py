@@ -3,7 +3,8 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
 from .forms import UserRegistrationForm, UserLoginForm
-from .models import StudentProfile, TeacherProfile, Profile
+from .models import Profile
+from .student_models import StudentProfile
 
 class UserRegisterView(FormView):
     template_name = 'accounts/register.html'
@@ -13,14 +14,17 @@ class UserRegisterView(FormView):
     def form_valid(self, form):
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password'])
-
         user_type = form.cleaned_data['user_type']
         if user_type == 'teacher':
             user.is_teacher = True
+            user.save()
         else:
             user.is_teacher = False
-        redirect('login')
+            user.save()
+            StudentProfile.objects.create(user=user)
         user.save()
+        redirect('login')
+        
 
         return super().form_valid(form)
      
