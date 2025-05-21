@@ -20,3 +20,7 @@ class ClassCreateView(FormView):
         form.save()
         return super().form_valid(form)
 
+def profile_page(request):
+    if not request.user.is_authenticated:
+        return redirect('register')
+    return render(request, "classes/profile.html")
