@@ -19,9 +19,15 @@
         <div class="nav-links">
           <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
           <a href="#" class="nav-link" onclick="goToHome()">Home</a>
+          <a href="#" class="nav-link" onclick="goToProfile()">Profile</a>
         </div>
       </div>
     </nav>
     {% block content %} {% endblock %}
+    <script>
+    function goToProfile() {
+      window.location.href = "http://127.0.0.1:8000/profile";
+    }
+  </script>
   </body>
 </html>
