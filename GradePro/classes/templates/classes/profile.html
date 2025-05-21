@@ -1,7 +1,11 @@
-{% extends "base.html" %} {% load static %} {% block title %}Profile{%endblock%}
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile{% endblock %}
 {% block css_files %}
 <link rel="stylesheet" href="{% static 'classes/profile.css' %}" />
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
 <div class="profile-container">
   <div class="sidebar">
     <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
@@ -10,27 +14,34 @@
   <div class="main-content">
     <h1>Your Subjects</h1>
 
-    {% if request.user.studentprofile.students.all %}
-    <ul>
-      {% for class in request.user.studentprofile.students.all %}
-      <li>{{ class.subject }} - {{ class.school.name }}</li>
+    {% if subject_data %}
+    <table class="grade-table">
+      <tbody>
+      {% for subject, data in subject_data.items %}
+        <tr>
+          <td class="index">{{ forloop.counter }}</td>
+
+          <td class="subject-cell">
+            <span class="subject-icon"></span>
+            {{ subject.subject }}
+          </td>
+
+          <td class="grades-cell">
+            {% for value in data.grades %}
+              <span class="grade-badge grade-{{ value }}">{{ value }}</span>
+            {% endfor %}
+
+            {% if data.average %}
+              <span class="avg-badge">Avg&nbsp;{{ data.average }}</span>
+            {% endif %}
+          </td>
+        </tr>
       {% endfor %}
-    </ul>
+      </tbody>
+    </table>
     {% else %}
-    <p>You are not enrolled in any classes yet.</p>
+      <p>You are not enrolled in any classes yet.</p>
     {% endif %}
   </div>
 </div>
-
-<script>
-  function goToHome() {
-    window.location.href = "http://127.0.0.1:8000/";
-  }
-</script>
-
-<script>
-  function goToAboutUs() {
-    window.location.href = "http://127.0.0.1:8000/aboutus/";
-  }
-</script>
 {% endblock %}

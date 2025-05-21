@@ -19,5 +19,7 @@ class Class(models.Model):
 class Grades(models.Model):
     values = models.JSONField(default=list, blank=True)
     school_class = models.ManyToManyField(Class, related_name="classes")
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name='student', null=True)
+ 
 
     
