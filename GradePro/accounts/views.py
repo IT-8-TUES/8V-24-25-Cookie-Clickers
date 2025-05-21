@@ -14,16 +14,17 @@ class UserRegisterView(FormView):
     def form_valid(self, form):
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password'])
-
         user_type = form.cleaned_data['user_type']
         if user_type == 'teacher':
             user.is_teacher = True
+            user.save()
         else:
             user.is_teacher = False
+            user.save()
             StudentProfile.objects.create(user=user)
         user.save()
         redirect('login')
-        
+        user.save()
 
         return super().form_valid(form)
      
