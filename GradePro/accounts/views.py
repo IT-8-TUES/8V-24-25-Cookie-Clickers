@@ -21,8 +21,9 @@ class UserRegisterView(FormView):
         else:
             user.is_teacher = False
             StudentProfile.objects.create(user=user)
-        redirect('login')
         user.save()
+        redirect('login')
+        
 
         return super().form_valid(form)
      

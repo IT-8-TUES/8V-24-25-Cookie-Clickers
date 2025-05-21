@@ -6,20 +6,20 @@
     <meta charset="utf-8" />
     <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {% block css_files %}
-    {% endblock %}
+    {% block css_files %} {% endblock %}
   </head>
   <body>
     <nav class="navbar">
-    <div class="nav-container">
-        <div class="nav-logo" onclick="goToHome()" style="cursor: pointer;">GrAdesPro</div>
-        <div class="nav-links">
-            <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
-            <a href="#" class="nav-link" onclick="goToHome()">Home</a>
+      <div class="nav-container">
+        <div class="nav-logo" onclick="goToHome()" style="cursor: pointer">
+          GrAdesPro
         </div>
-    </div>
-</nav>
-    {% block content %} 
-    {% endblock %}
+        <div class="nav-links">
+          <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
+          <a href="#" class="nav-link" onclick="goToHome()">Home</a>
+        </div>
+      </div>
+    </nav>
+    {% block content %} {% endblock %}
   </body>
 </html>
