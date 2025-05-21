@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.student_models import StudentProfile
+from accounts.student_models import StudentProfile, TeacherProfile
 
 class School(models.Model):
     name = models.CharField(max_length=100)
@@ -19,7 +19,6 @@ class Class(models.Model):
 class Grades(models.Model):
     values = models.JSONField(default=list, blank=True)
     school_class = models.ManyToManyField(Class, related_name="classes")
-    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name='student', null=True)
- 
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name="student_grade", null=True)
 
     

@@ -37,8 +37,3 @@ class Profile(AbstractBaseUser):
 
     def has_module_perms(self, accounts):
         return self.is_superuser
-
-
-class TeacherProfile(models.Model):
-    user = models.OneToOneField(Profile, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=100, blank=True)

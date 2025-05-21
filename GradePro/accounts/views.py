@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
 from .forms import UserRegistrationForm, UserLoginForm
 from .models import Profile
-from .student_models import StudentProfile
+from .student_models import StudentProfile, TeacherProfile
 
 class UserRegisterView(FormView):
     template_name = 'accounts/register.html'
@@ -18,6 +18,7 @@ class UserRegisterView(FormView):
         if user_type == 'teacher':
             user.is_teacher = True
             user.save()
+            TeacherProfile.objects.create(user=user)
         else:
             user.is_teacher = False
             user.save()

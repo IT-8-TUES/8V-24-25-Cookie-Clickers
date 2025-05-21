@@ -17,10 +17,10 @@ def home_page(request):
 class ClassCreateView(FormView):
     template_name = 'classes/create_class.html'
     form_class = ClassCreateForm
-    success_url = reverse_lazy('')
-    
+    success_url = reverse_lazy('home_page')  # change this
+
     def form_valid(self, form):
-        form.save()
+        class_obj = form.save()
         return super().form_valid(form)
 
 

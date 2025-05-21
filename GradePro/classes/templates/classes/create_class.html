@@ -6,26 +6,42 @@
 {% block content %}
 <div class="container">
     <h2>Create a New Class</h2>
-    
+
     <form method="post">
         {% csrf_token %}
+        
+        <!-- Subject field -->
         <div>
             <label for="id_subject">Subject:</label>
             {{ form.subject }}
         </div>
-        
+
+        <!-- Search input -->
         <div>
             <label for="student-search">Search Students:</label>
             <input type="text" id="student-search" placeholder="Search by name..." onkeyup="filterStudents()">
         </div>
 
-        <div id="student-list" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
-            {% for student in form.students_checkbox %}
-                <div class="student-entry">
-                    {{ student.tag }} {{ student.choice_label }}
+        <!-- All students list -->
+        <div id="student-list" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+            {% for student in form.students.field.queryset %}
+                <div class="student-entry" data-id="{{ student.id }}">
+                    <label>
+                        {{ student.user.first_name }} {{ student.user.last_name }}
+                        <button type="button" onclick="addStudent({{ student.id }}, '{{ student.user.first_name }} {{ student.user.last_name }}')">Add</button>
+                    </label>
                 </div>
             {% endfor %}
         </div>
+
+        <!-- Selected students list -->
+        <div style="margin-top: 20px;">
+            <h4>Selected Students:</h4>
+            <ul id="selected-students-list"></ul>
+        </div>
+
+        <!-- Hidden select field to hold selected student IDs -->
+        <select id="id_students" name="students" multiple hidden></select>
 
         <button type="submit">Create Class</button>
     </form>
@@ -34,11 +50,41 @@
 <script>
     function filterStudents() {
         const input = document.getElementById('student-search').value.toLowerCase();
-        const entries = document.querySelectorAll('.student-entry');
-        entries.forEach(entry => {
+        document.querySelectorAll('.student-entry').forEach(entry => {
             const text = entry.textContent.toLowerCase();
             entry.style.display = text.includes(input) ? 'block' : 'none';
         });
+    }
+
+    function addStudent(id, name) {
+        const list = document.getElementById('selected-students-list');
+        const select = document.getElementById('id_students');
+
+        // Prevent adding duplicates
+        if (document.getElementById(`student-item-${id}`)) return;
+
+        // Add to visual list
+        const li = document.createElement('li');
+        li.id = `student-item-${id}`;
+        li.innerHTML = `${name} <button type="button" onclick="removeStudent(${id})">Remove</button>`;
+        list.appendChild(li);
+
+        // Add to hidden select
+        const option = document.createElement('option');
+        option.value = id;
+        option.selected = true;
+        option.id = `student-option-${id}`;
+        select.appendChild(option);
+    }
+
+    function removeStudent(id) {
+        // Remove from visual list
+        const li = document.getElementById(`student-item-${id}`);
+        if (li) li.remove();
+
+        // Remove from hidden select
+        const option = document.getElementById(`student-option-${id}`);
+        if (option) option.remove();
     }
 </script>
 {% endblock %}

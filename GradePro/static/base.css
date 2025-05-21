@@ -5,7 +5,7 @@ body {
     color: #333;
 }
 
-/* Navbar Styles */
+
 .navbar {
     background-color: #e6f0fa; /* Soft blue tone */
     padding: 15px 30px;
@@ -59,19 +59,18 @@ body {
     color: #003f6b;
 }
 
-.home-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-weight: bold;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 2rem;
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.features-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;           
-  padding-left: 1.5rem; 
+p {
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 3rem;
+  color: rgb(23, 94, 226);
+  text-align: center;
 }
