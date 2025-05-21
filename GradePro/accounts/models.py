@@ -38,12 +38,6 @@ class Profile(AbstractBaseUser):
     def has_module_perms(self, accounts):
         return self.is_superuser
 
-class StudentProfile(models.Model):
-    user = models.OneToOneField(Profile, on_delete=models.CASCADE)
-    grades = models.JSONField(default=list, blank=True)
-    
-    def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
 
 class TeacherProfile(models.Model):
     user = models.OneToOneField(Profile, on_delete=models.CASCADE)
