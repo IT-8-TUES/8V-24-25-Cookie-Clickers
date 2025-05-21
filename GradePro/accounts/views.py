@@ -25,7 +25,7 @@ class UserRegisterView(FormView):
             StudentProfile.objects.create(user=user)
         user.save()
         redirect('login')
-        user.save()
+        
 
         return super().form_valid(form)
      
