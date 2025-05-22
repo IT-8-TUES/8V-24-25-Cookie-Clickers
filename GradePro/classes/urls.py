@@ -7,6 +7,4 @@ urlpatterns = [
     path("", home_page, name="home_page"),
     path("class_create/", ClassCreateView.as_view(), name="create_class"),
     path("profile/", profile_page, name="profile_page"),
-
-    
 ]

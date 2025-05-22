@@ -9,16 +9,11 @@
 
 {% block content %}
 <div class="home-content">
-  <div><h1>Welcome to GrAdesPro</h1>
-  <h2>Вашият модерен електронен дневник за училище</h2>
-  <p>GrAdesPro е създаден, за да направи ученето по-организирано, проследяването на оценките – по-лесно, а комуникацията между ученици и учители – по-ефективна.</p>
-  <h3>Какво предлага GrAdesPro:</h3>
-  <ul class="features-list"> 
-    <li><strong>Цялостен преглед на оценките:</strong> Лесен и ясен достъп до всички оценки – по предмети, дати и срокове.</li>
-    <li><strong>Уведомления в реално време:</strong> Получавайте известия при нови оценки, отсъствия или съобщения от учители.</li>
-    <li><strong>Анализи и статистики:</strong> Следете успеха си с помощта на графики, средни оценки и тенденции по предмети.</li>
-  </ul>
-  </div>
+    {% if request.user.is_teacher %}
+    <h2>Welcome, Teacher {{ request.user.first_name }}</h2>
+    {% else %}
+    <h2>Welcome, Student {{ request.user.first_name }}</h2>
+    {% endif %}
 </div>
 
 
