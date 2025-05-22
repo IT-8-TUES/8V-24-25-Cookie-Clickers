@@ -5,9 +5,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
 from .forms import ClassCreateForm
 from django.shortcuts import render
-from classes.models import Grades
-from accounts.student_models import StudentProfile
-
+from classes.models import Grades 
+from accounts.student_models import StudentProfile, TeacherProfile
+from .models import School
 # Create your views here.
 def home_page(request):
     if not request.user.is_authenticated:
@@ -20,7 +20,13 @@ class ClassCreateView(FormView):
     success_url = reverse_lazy('home_page')  # change this
 
     def form_valid(self, form):
-        class_obj = form.save()
+        school = School.objects.get(name="SigmaSchoolTSTS")
+        teacher_profile = TeacherProfile.objects.get(user=self.request.user)
+        class_obj = form.save(commit=False)
+        class_obj.school = school
+        class_obj.teacher = teacher_profile            
+        class_obj.save()
+        form.save_m2m()    
         return super().form_valid(form)
 
 

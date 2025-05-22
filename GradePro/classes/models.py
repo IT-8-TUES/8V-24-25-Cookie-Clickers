@@ -10,8 +10,9 @@ class School(models.Model):
 # Create your models here.
 class Class(models.Model):
     subject = models.CharField(max_length=50)
+    teacher = models.ForeignKey(TeacherProfile, on_delete=models.CASCADE, related_name='classes')
     students = models.ManyToManyField(StudentProfile, related_name='students')
-    school = models.ForeignKey(School, on_delete=models.CASCADE, default="SigmaSchoolTSTS", related_name='school')
+    school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='school')
     
     def __str__(self):
         return f"{self.subject} в {self.school.name}"

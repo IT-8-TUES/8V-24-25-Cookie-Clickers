@@ -17,9 +17,14 @@
           GrAdesPro
         </div>
         <div class="nav-links">
-            <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
             <a href="#" class="nav-link" onclick="goToHome()">Home</a>
-            <!--<form action="{% url 'logout' %}" method="post" style="display: inline;">-->
+            <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
+            {% if request.user.is_teacher %}
+            <a href="#" class="nav-link" onclick="goToCreateClass()">Create a class</a>
+            {% else %}
+            <a href="#" class="nav-link" onclick="goToProfile()">Profile</a>
+            {% endif %}
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
             {% csrf_token %}
             <!--<button type="submit" class="nav-link nav-link-button">Log Out</button>-->
             </form>
@@ -30,6 +35,15 @@
     <script>
     function goToProfile() {
       window.location.href = "http://127.0.0.1:8000/profile";
+    }
+    function goToHome() {
+      window.location.href = "http://127.0.0.1:8000/";
+    }
+    function goToAboutUs() {
+      window.location.href = "http://127.0.0.1:8000/aboutus/";
+    }
+    function goToCreateClass(){
+      window.location.href= "http://127.0.0.1:8000/class_create/"
     }
   </script>
   </body>
