@@ -99,10 +99,6 @@ body {
     transition: background-color 0.3s;
   } 
   
-  .student-entry button:hover {
-
-  }
-  
   #selected-students-list {
     list-style: none;
     padding-left: 0;
