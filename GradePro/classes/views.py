@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
 from .forms import ClassCreateForm
 from django.shortcuts import render
-from classes.models import Grades 
+from classes.models import Grades, Class
 from accounts.student_models import StudentProfile, TeacherProfile
 from .models import School
 # Create your views here.
@@ -31,17 +31,17 @@ class ClassCreateView(FormView):
 
 
 
-
 def profile_page(request):
     student_profile = get_object_or_404(StudentProfile, user=request.user)
     tab = request.GET.get("tab", "grades")
-    subjects = student_profile.students.all().select_related("school")
+    cls_id = request.GET.get("class")  # for ranking
+
+    subjects = student_profile.enrolled_classes.all().select_related("school")
 
     subject_data = {}
-    all_grades = []
+    overall_values = []
 
     for subject in subjects:
-        # Filter Grades linked to this subject and student
         grades_qs = Grades.objects.filter(student=student_profile, school_class=subject)
         values = []
         for grade in grades_qs:
@@ -52,23 +52,26 @@ def profile_page(request):
             "grades": values,
             "average": avg
         }
-        all_grades.extend(values)
+        overall_values.extend(values)
 
-    overall_avg = round(sum(all_grades) / len(all_grades), 2) if all_grades else None
+    overall_avg = round(sum(overall_values) / len(overall_values), 2) if overall_values else None
 
-    # Ranking logic
+    # ─────── Ranking only in current class ───────
     ranking = None
     place = None
-    if tab == "rank" and subjects.exists():
-        reference_class = subjects.first()
-        classmates = reference_class.students.all()
+    selected_class = None
+
+    if tab == "rank":
+        selected_class = get_object_or_404(Class, id=cls_id) if cls_id else subjects.first()
+        classmates = selected_class.students.all()
 
         ranking = []
         for mate in classmates:
-            mate_grades = Grades.objects.filter(student=mate)
+            mate_grades = Grades.objects.filter(student=mate, school_class=selected_class)
             mate_values = []
             for g in mate_grades:
                 mate_values.extend(g.values)
+
             avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
             ranking.append((mate, avg))
 
@@ -86,4 +89,6 @@ def profile_page(request):
         "ranking": ranking,
         "place": place,
         "active_tab": tab,
+        "subjects": subjects,
+        "selected_class": selected_class,
     })
