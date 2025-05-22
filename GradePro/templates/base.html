@@ -19,9 +19,9 @@
         <div class="nav-links">
             <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
             <a href="#" class="nav-link" onclick="goToHome()">Home</a>
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            <!--<form action="{% url 'logout' %}" method="post" style="display: inline;">-->
             {% csrf_token %}
-            <button type="submit" class="nav-link nav-link-button">Log Out</button>
+            <!--<button type="submit" class="nav-link nav-link-button">Log Out</button>-->
             </form>
         </div>
       </div>

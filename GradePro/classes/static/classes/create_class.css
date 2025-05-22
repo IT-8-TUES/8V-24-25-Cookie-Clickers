@@ -1,0 +1,141 @@
+/* class_create.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7fb;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e3e7ee;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #1f2d3d;
+    text-align: center;
+}
+
+form > div {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #34495e;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #cdd9ed;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #5c9ded;
+    outline: none;
+}
+
+#student-list {
+    background: #fafbfc;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #dce3ec;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.student-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    background-color: #f8f9fb;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.student-entry:hover {
+    background-color: #eef4ff;
+}
+
+.student-entry button {
+    background-color: #5c9ded;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s;
+}
+
+.student-entry button:hover {
+    background-color: #3c7edb;
+}
+
+#selected-students-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+#selected-students-list li {
+    background: #eaf2ff;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+#selected-students-list button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
+
+#selected-students-list button:hover {
+    background-color: #e34b4b;
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #16a085;
+}
