@@ -11,7 +11,7 @@ class School(models.Model):
 class Class(models.Model):
     subject = models.CharField(max_length=50)
     teacher = models.ForeignKey(TeacherProfile, on_delete=models.CASCADE, related_name='classes')
-    students = models.ManyToManyField(StudentProfile, related_name='students')
+    students = models.ManyToManyField(StudentProfile, related_name='enrolled_classes')
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='school')
     
     def __str__(self):

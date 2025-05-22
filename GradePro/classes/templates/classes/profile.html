@@ -1,47 +1,123 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Profile{% endblock %}
+
 {% block css_files %}
 <link rel="stylesheet" href="{% static 'classes/profile.css' %}" />
 {% endblock %}
 
 {% block content %}
 <div class="profile-container">
+  <!-- ────────── SIDEBAR ────────── -->
   <div class="sidebar">
     <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
   </div>
 
+  <!-- ────────── MAIN ────────── -->
   <div class="main-content">
-    <h1>Your Subjects</h1>
 
-    {% if subject_data %}
-    <table class="grade-table">
-      <tbody>
-      {% for subject, data in subject_data.items %}
-        <tr>
-          <td class="index">{{ forloop.counter }}</td>
+    <!-- pill-style sub-nav -->
+    <nav class="subnav">
+      <a href="?tab=grades"
+         class="subnav-link {% if active_tab == 'grades' %}active{% endif %}">
+         Grades
+      </a>
+      <a href="?tab=info"
+         class="subnav-link {% if active_tab == 'info' %}active{% endif %}">
+         Personal&nbsp;Info
+      </a>
+      <a href="?tab=avg"
+         class="subnav-link {% if active_tab == 'avg' %}active{% endif %}">
+         Overall&nbsp;Average
+      </a>
+      <a href="?tab=rank"
+         class="subnav-link {% if active_tab == 'rank' %}active{% endif %}">
+         Place&nbsp;in&nbsp;Class
+      </a>
+    </nav>
 
-          <td class="subject-cell">
-            <span class="subject-icon"></span>
-            {{ subject.subject }}
-          </td>
-
-          <td class="grades-cell">
-            {% for value in data.grades %}
-              <span class="grade-badge grade-{{ value }}">{{ value }}</span>
+    {# ────────── GRADES TAB ────────── #}
+    {% if active_tab == 'grades' %}
+      <h1>Your Subjects</h1>
+      {% if subject_data %}
+        <table class="grade-table">
+          <tbody>
+            {% for subject, data in subject_data.items %}
+              <tr>
+                <td class="index">{{ forloop.counter }}</td>
+                <td class="subject-cell">
+                  <span class="subject-icon">📘</span> {{ subject.subject }}
+                </td>
+                <td class="grades-cell">
+                  {% if data.grades %}
+                    {% for v in data.grades %}
+                      <span class="grade-badge grade-{{ v }}">{{ v }}</span>
+                    {% endfor %}
+                    <span class="avg-badge">Avg&nbsp;{{ data.average }}</span>
+                  {% else %}
+                    <span class="no-grades">No grades yet</span>
+                  {% endif %}
+                </td>
+              </tr>
             {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>You are not enrolled in any classes yet.</p>
+      {% endif %}
 
-            {% if data.average %}
-              <span class="avg-badge">Avg&nbsp;{{ data.average }}</span>
-            {% endif %}
-          </td>
-        </tr>
+    {# ────────── PERSONAL INFO TAB ────────── #}
+    {% elif active_tab == 'info' %}
+      <h1>Personal Information</h1>
+      <ul class="info-list">
+        <li><strong>Name:</strong> {{ request.user.first_name }} {{ request.user.last_name }}</li>
+        <li><strong>Email:</strong> {{ request.user.email }}</li>
+        <li><strong>User ID:</strong> {{ request.user.id }}</li>
+      </ul>
+
+    {# ────────── OVERALL AVERAGE TAB ────────── #}
+    {% elif active_tab == 'avg' %}
+      <h1>Your Overall Average</h1>
+      {% if overall_avg %}
+        <p class="big-average">{{ overall_avg }}</p>
+      {% else %}
+        <p class="no-grades">No grades available to calculate an average.</p>
+      {% endif %}
+
+    {# ────────── RANKING TAB ────────── #}
+{% elif active_tab == 'rank' %}
+<h1>Your Place in {{ selected_class.subject }}</h1>
+
+<!-- scope selector pills -->
+<div class="scope-strip">
+  {% for cls in subjects %}
+    <a href="?tab=rank&class={{ cls.id }}"
+       class="scope-pill {% if cls.id == selected_class.id %}active{% endif %}">
+       {{ cls.subject }}
+    </a>
+  {% endfor %}
+</div>
+
+{% if ranking %}
+  <p>You are <strong>{{ place }}</strong> out of {{ ranking|length }} students in this class.</p>
+  <table class="rank-table">
+    <thead><tr><th>#</th><th>Name</th><th>Average</th></tr></thead>
+    <tbody>
+      {% for mate, avg in ranking %}
+      <tr {% if mate.id == student.id %}class="self"{% endif %}>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ mate.user.first_name }} {{ mate.user.last_name }}</td>
+        <td>{{ avg }}</td>
+      </tr>
       {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-      <p>You are not enrolled in any classes yet.</p>
-    {% endif %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="no-grades">Ranking not available.</p>
+{% endif %}
+{% endif %}
+
+
   </div>
 </div>
 {% endblock %}

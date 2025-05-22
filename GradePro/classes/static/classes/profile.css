@@ -46,7 +46,7 @@ body {
   color: #222;
 }
 
-/* -------- NAVBAR (if present in base.html) -------- */
+/* -------- NAVBAR -------- */
 .navbar {
   background: #e6f0fa;
   padding: 15px 30px;
@@ -100,7 +100,33 @@ body {
   transform-origin: bottom left;
 }
 
-/* ------------- SUBJECT / GRADES TABLE ------------- */
+/* ---------- SUBNAVIGATION LINKS ---------- */
+.subnav {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.subnav-link {
+  text-decoration: none;
+  color: #005b96;
+  border: 1px solid transparent;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.subnav-link:hover {
+  background-color: #e6f0fa;
+}
+
+.subnav-link.active {
+  background-color: #005b96;
+  color: #fff;
+}
+
+/* ---------- SUBJECT / GRADES TABLE ---------- */
 .grade-table {
   width: 100%;
   border-collapse: collapse;
@@ -138,7 +164,7 @@ body {
   align-items: center;
 }
 
-/* ------------- GRADE & AVERAGE BADGES ------------- */
+/* ---------- GRADE & AVERAGE BADGES ---------- */
 .grade-badge,
 .avg-badge {
   padding: 3px 12px;
@@ -150,11 +176,11 @@ body {
   color: #fff;
 }
 
-.grade-2 { background: #e74c3c; } /* red   */
-.grade-3 { background: #e67e22; } /* orange*/
-.grade-4 { background: #f1c40f; color:#111; } /* yellow */
-.grade-5 { background: #2e86de; } /* blue  */
-.grade-6 { background: #27ae60; } /* green */
+.grade-2 { background: #e74c3c; }
+.grade-3 { background: #e67e22; }
+.grade-4 { background: #f1c40f; color: #111; }
+.grade-5 { background: #2e86de; }
+.grade-6 { background: #27ae60; }
 
 .avg-badge {
   background: #ecf4ff;
@@ -162,8 +188,76 @@ body {
   box-shadow: 0 0 0 1px #d6e5ff inset;
 }
 
-/* ------------- MISC ------------- */
+/* ---------- PERSONAL INFO ---------- */
+.info-list {
+  list-style: none;
+  font-size: 16px;
+  padding-left: 0;
+}
+
+.info-list li {
+  margin-bottom: 10px;
+}
+
+/* ---------- OVERALL AVERAGE ---------- */
+.big-average {
+  font-size: 48px;
+  font-weight: 700;
+  color: #0d47a1;
+  margin-top: 20px;
+}
+
+/* ---------- RANKING TABLE ---------- */
+.rank-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.rank-table th,
+.rank-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.rank-table tr:nth-child(odd) {
+  background-color: #fafafa;
+}
+
+.rank-table .self {
+  background-color: #ecf4ff;
+  font-weight: 600;
+}
+
+/* ---------- MISC ---------- */
 .no-grades {
   color: #888;
   font-style: italic;
+}
+
+
+/* ---------- RANKING SCOPE SELECTOR ---------- */
+.scope-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.scope-pill {
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 18px;
+  background: #e8f0ff;
+  color: #005b96;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.scope-pill:hover { background: #d6e5ff; }
+
+.scope-pill.active {
+  background: #005b96;
+  color: #fff;
 }
