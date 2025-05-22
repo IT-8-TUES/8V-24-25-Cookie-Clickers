@@ -14,22 +14,20 @@ def home_page(request):
         return redirect('register')
     return render(request, "classes/home.html")
 
+
 class ClassCreateView(FormView):
     template_name = 'classes/create_class.html'
     form_class = ClassCreateForm
-    success_url = reverse_lazy('home_page')  # change this
+    success_url = reverse_lazy('home_page') 
 
     def form_valid(self, form):
-        school = School.objects.get(name="SigmaSchoolTSTS")
         teacher_profile = TeacherProfile.objects.get(user=self.request.user)
         class_obj = form.save(commit=False)
-        class_obj.school = school
         class_obj.teacher = teacher_profile            
         class_obj.save()
         form.save_m2m()    
         return super().form_valid(form)
-
-
+    
 
 def profile_page(request):
     student_profile = request.user.studentprofile

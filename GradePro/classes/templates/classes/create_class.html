@@ -4,7 +4,8 @@
 {% block title %}Create Class{% endblock %}
 
 {% block css_files %}
-<link rel="stylesheet" href="{% static 'classes/class_create.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="{% static 'classes/create_class.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -16,13 +17,20 @@
         
         <!-- Subject field -->
         <div>
-            <label for="id_subject">Subject:</label>
+            <label for="id_subject"><i class="fas fa-book"></i> Subject:</label>
             {{ form.subject }}
         </div>
+          
+
+        <div>
+            <label for="id_school"><i class="fas fa-school"></i> School:</label>
+            {{ form.school }}
+        </div>
+          
 
         <!-- Search input -->
         <div>
-            <label for="student-search">Search Students:</label>
+            <label for="student-search"><i class="fas fa-search"></i> Search Students:</label>
             <input type="text" id="student-search" placeholder="Search by name..." onkeyup="filterStudents()">
         </div>
 
@@ -32,7 +40,8 @@
                 <div class="student-entry" data-id="{{ student.id }}">
                     <label>
                         {{ student.user.first_name }} {{ student.user.last_name }}
-                        <button type="button" onclick="addStudent({{ student.id }}, '{{ student.user.first_name }} {{ student.user.last_name }}')">Add</button>
+                        <button type="button" class="icon-button" onclick="addStudent({{ student.id }}, '{{ student.user.first_name }} {{ student.user.last_name }}')">✔️</button>
+
                     </label>
                 </div>
             {% endfor %}
@@ -40,14 +49,14 @@
 
         <!-- Selected students list -->
         <div style="margin-top: 20px;">
-            <h4>Selected Students:</h4>
+            <h4><i class="fas fa-user-check"></i> Selected Students:</h4>
             <ul id="selected-students-list"></ul>
         </div>
 
         <!-- Hidden select field to hold selected student IDs -->
         <select id="id_students" name="students" multiple hidden></select>
 
-        <button type="submit">Create Class</button>
+        <button type="submit" class="class-button">Create Class</button>
     </form>
 </div>
 
@@ -70,7 +79,8 @@
         // Add to visual list
         const li = document.createElement('li');
         li.id = `student-item-${id}`;
-        li.innerHTML = `${name} <button type="button" onclick="removeStudent(${id})">Remove</button>`;
+        li.innerHTML = `${name} <button type="button" class="icon-button" onclick="removeStudent(${id})">❌</button>`;
+
         list.appendChild(li);
 
         // Add to hidden select
