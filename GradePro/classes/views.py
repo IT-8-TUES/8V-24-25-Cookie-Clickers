@@ -19,6 +19,10 @@ def home_page(request):
         return render(request, "classes/home.html", {'classes': classes})
     else:
         return render(request, "classes/home.html")
+    
+def hero_page(request):
+    return render(request, "classes/hero.html")
+
 
 
 

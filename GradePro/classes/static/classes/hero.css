@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+:root{
+    --purple:#6436d9;
+    --purple-light:#e8e1ff;
+    --white:#ffffff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Inter",sans-serif;
+}
+
+body{
+    background:var(--white);
+    color:#222;
+}
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:4rem 1.5rem;
+    gap:2rem;
+}
+
+.title{
+    font-size:clamp(2.25rem,5vw+1rem,3.5rem);
+    font-weight:600;
+    color:var(--purple);
+}
+
+.subtitle{
+    font-size:clamp(1rem,1.5vw+0.75rem,1.25rem);
+    color:#555;
+    max-width:60ch;
+}
+
+.options{
+    display:flex;
+    flex-wrap:wrap;
+    width:100%;
+    max-width:1000px;
+}
+
+.card{
+    flex:1 1 50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:4rem 2rem;
+    background:var(--purple-light);
+    text-decoration:none;
+    transition:transform .25s ease,box-shadow .25s ease;
+    cursor:pointer;
+}
+
+.card:hover,
+.card:focus-visible{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:0 12px 25px rgba(0,0,0,.12);
+}
+
+.card:focus-visible{
+    outline:3px solid var(--purple);
+}
+
+.card:active{
+    transform:translateY(-1px) scale(1.01);
+}
+
+.card:nth-child(odd){
+    border-right:2px solid var(--white);
+}
+
+@media(prefers-reduced-motion:reduce){
+    .card{
+        transition:none;
+    }
+}
+
+@media(max-width:768px){
+    .card{
+        flex:1 1 100%;
+        border-right:none;
+        border-bottom:2px solid var(--white);
+    }
+    .card:last-child{
+        border-bottom:none;
+    }
+}
+
+.label{
+    font-size:2rem;
+    font-weight:600;
+    color:var(--purple);
+    margin-bottom:.5rem;
+}
+
+.hint{
+    font-size:.95rem;
+    color:#444;
+    max-width:30ch;
+    text-align:center;
+}
