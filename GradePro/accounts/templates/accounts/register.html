@@ -4,16 +4,65 @@
 <title>{% block title %}Register{% endblock %}</title>
 
 {% block css_files %}
-<link rel="stylesheet" href="{% static "accounts/register.css" %}">
+<link rel="stylesheet" href="{% static 'accounts/register.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
+
+        <!-- First Name -->
+        <div class="form-group">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+                <div class="error">{{ form.first_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+                <div class="error">{{ form.last_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="error">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            {% if form.password.errors %}
+                <div class="error">{{ form.password.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- User Type -->
+        <div class="form-group">
+            {{ form.user_type.label_tag }}
+            {{ form.user_type }}
+            {% if form.user_type.errors %}
+                <div class="error">{{ form.user_type.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="submit-btn">Register</button>
     </form>
-    <p>Already have a profile? <a href="{% url 'login' %}">Login</a></p>
+
+    <p class="login-link">
+        Already have a profile? <a href="{% url 'login' %}">Login</a>
+    </p>
 </div>
 {% endblock %}

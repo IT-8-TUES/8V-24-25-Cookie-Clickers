@@ -28,6 +28,7 @@ class ClassCreateView(FormView):
     success_url = reverse_lazy('home_page')
 
     def form_valid(self, form):
+        print(self.request.POST)
         teacher_profile = TeacherProfile.objects.get(user=self.request.user)
         class_obj = form.save(commit=False)
         class_obj.teacher = teacher_profile
