@@ -8,11 +8,21 @@ from django.shortcuts import render
 from classes.models import Grades, Class
 from accounts.student_models import StudentProfile, TeacherProfile
 from .models import School
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 # Create your views here.
 def home_page(request):
     if not request.user.is_authenticated:
         return redirect('register')
-    return render(request, "classes/home.html")
+    if request.user.is_teacher:
+        classes = None
+        teacher_profile = request.user.teacherprofile
+        classes = Class.objects.filter(teacher=teacher_profile)
+        return render(request, "classes/home.html", {'classes': classes})
+    else:
+        return render(request, "classes/home.html")
+
 
 class ClassCreateView(FormView):
     template_name = 'classes/create_class.html'
@@ -45,7 +55,7 @@ def profile_page(request):
         grades_qs = Grades.objects.filter(student=student_profile, school_class=subject)
         values = []
         for grade in grades_qs:
-            values.extend(grade.values)
+            values.append(grade.values)
 
         avg = round(sum(values) / len(values), 2) if values else None
         subject_data[subject] = {
@@ -70,7 +80,7 @@ def profile_page(request):
             mate_grades = Grades.objects.filter(student=mate, school_class=selected_class)
             mate_values = []
             for g in mate_grades:
-                mate_values.extend(g.values)
+                mate_values.append(g.values)
 
             avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
             ranking.append((mate, avg))
@@ -92,3 +102,46 @@ def profile_page(request):
         "subjects": subjects,
         "selected_class": selected_class,
     })
+def get_class_students(request, class_id):
+    try:
+        school_class = Class.objects.get(id=class_id)
+    except Class.DoesNotExist:
+        return JsonResponse({"error": "Class not found"}, status=404)
+
+    students = school_class.students.all()
+    data = []
+    for s in students:
+        grades_qs = Grades.objects.filter(student=s, school_class=school_class)
+        grades = []
+        for g in grades_qs:
+            grades.append(g.values)
+        data.append({
+            "id": s.id,
+            "name": s.user.get_full_name(),
+            "grades": grades
+        })
+    return JsonResponse({"students": data})
+
+
+def get_student_grades(request, student_id, class_id):
+    # AJAX: return grades for a specific student in a class
+    grades = Grades.objects.filter(student_id=student_id, school_class_id=class_id).order_by('-timestamp')
+    data = [g.value for g in grades]
+    return JsonResponse({"grades": data})
+
+
+@csrf_exempt
+def assign_grade(request):
+    # AJAX POST: assign a new grade to a student
+    if request.method == "POST":
+        data = json.loads(request.body)
+        student_id = data.get('student_id')
+        class_id = data.get('class_id')
+        grade_value = data.get('grade_value')
+        print("Received data:", data)
+        # Validate values here if needed
+
+        grade = Grades.objects.create(student_id=student_id, school_class_id=class_id, values=grade_value)
+        return JsonResponse({"success": True, "grade": grade.values})
+
+    return JsonResponse({"error": "Invalid request"}, status=400)

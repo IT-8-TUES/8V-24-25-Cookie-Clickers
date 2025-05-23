@@ -37,3 +37,6 @@ class Profile(AbstractBaseUser):
 
     def has_module_perms(self, accounts):
         return self.is_superuser
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"

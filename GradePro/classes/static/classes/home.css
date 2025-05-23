@@ -4,7 +4,25 @@ body {
     background-color: #f0f8ff; 
     color: #333;
 }
+  .page-layout {
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
 
+  .sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-right: 2px solid #000; /* <-- Thicker, visible outline */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: soft shadow */
+  }
+
+  .main-content {
+    flex-grow: 1;
+    padding: 1rem;
+  }
 /* Navbar Styles */
 .navbar {
     background-color: #e6f0fa; /* Soft blue tone */
@@ -75,3 +93,9 @@ body {
   gap: 1rem;           
   padding-left: 1.5rem; 
 }
+
+.grade-2 { background: #e74c3c; }
+.grade-3 { background: #e67e22; }
+.grade-4 { background: #f1c40f; color: #111; }
+.grade-5 { background: #2e86de; }
+.grade-6 { background: #27ae60; }
