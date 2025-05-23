@@ -1,0 +1,87 @@
+    body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f0fb; /* Optional: light background */
+}
+    
+    .container {
+        max-width: 25rem;
+        width: 100%;
+        background-color: #f9f6ff;
+        margin-right: 50% - 30rem;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #6A3BC4;
+    }
+
+    form p {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+    }
+
+    input {
+        padding: 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #6A3BC4;
+    }
+
+    .errorlist {
+        color: #d32f2f;
+        font-size: 0.9rem;
+        margin-top: -0.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #6A3BC4;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #512da8;
+    }
+
+    p {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    a {
+        color: #6a1b9a;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }

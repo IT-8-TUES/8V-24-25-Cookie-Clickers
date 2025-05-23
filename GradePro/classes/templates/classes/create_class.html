@@ -40,7 +40,9 @@
                 <div class="student-entry" data-id="{{ student.id }}">
                     <label>
                         {{ student.user.first_name }} {{ student.user.last_name }}
-                        <button type="button" class="icon-button" onclick="addStudent({{ student.id }}, '{{ student.user.first_name }} {{ student.user.last_name }}')">✔️</button>
+                        <button type="button" class="icon-button" onclick="addStudent('{{ student.id }}', '{{ student.user.first_name }} {{ student.user.last_name }}')">
+                            <i class="fas fa-check" id="icon-select"></i>
+                        </button>
 
                     </label>
                 </div>
@@ -54,7 +56,7 @@
         </div>
 
         <!-- Hidden select field to hold selected student IDs -->
-        <select id="id_students" name="students" multiple hidden></select>
+        <select id="id_students" name="students" multiple style="display: none;"></select>
 
         <button type="submit" class="class-button">Create Class</button>
     </form>
@@ -79,7 +81,7 @@
         // Add to visual list
         const li = document.createElement('li');
         li.id = `student-item-${id}`;
-        li.innerHTML = `${name} <button type="button" class="icon-button" onclick="removeStudent(${id})">❌</button>`;
+        li.innerHTML = `${name} <button type="button" class="icon-button" onclick="removeStudent(${id})"><i class="fas fa-times" id="icon-select"></i></button>`;
 
         list.appendChild(li);
 

@@ -187,10 +187,9 @@ body {
     background-size: 1rem;
     transition: border-color 0.3s;
   }
-  
-  select:focus {
-    border-color: #6A3BC4;
-    outline: none;
-    background-color: #f5f2fb;
+
+  #icon-select {
+    color: #8862D0;
   }
+
   
