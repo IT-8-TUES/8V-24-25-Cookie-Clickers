@@ -9,7 +9,7 @@ html,
 body {
   height: 100%;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5faff;
+  background-color: #f8f8ff;
   color: #333;
 }
 
@@ -22,14 +22,14 @@ body {
 /* -------- SIDEBAR -------- */
 .sidebar {
   width: 250px;
-  background: #f0f0f0;
+  background: #e8dcfb;
   padding: 20px;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #d5c4f5;
 }
 
 .sidebar h2 {
   margin-top: 0;
-  color: #2c3e50;
+  color: #4d2d96;
   font-weight: 700;
 }
 
@@ -48,7 +48,7 @@ body {
 
 /* -------- NAVBAR -------- */
 .navbar {
-  background: #e6f0fa;
+  background: #6A3BC4;
   padding: 15px 30px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
@@ -62,7 +62,7 @@ body {
 .nav-logo {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #005b96;
+  color: white;
 }
 
 .nav-links {
@@ -72,7 +72,7 @@ body {
 
 .nav-link {
   text-decoration: none;
-  color: #005b96;
+  color: white;
   font-weight: 500;
   position: relative;
   transition: color 0.3s ease;
@@ -85,14 +85,14 @@ body {
   height: 2px;
   bottom: -3px;
   left: 0;
-  background: #005b96;
+  background: white;
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
 .nav-link:hover {
-  color: #003f6b;
+  color: #e8dcfb;
 }
 
 .nav-link:hover::after {
@@ -109,7 +109,7 @@ body {
 
 .subnav-link {
   text-decoration: none;
-  color: #005b96;
+  color: #6A3BC4;
   border: 1px solid transparent;
   padding: 6px 16px;
   border-radius: 20px;
@@ -118,11 +118,11 @@ body {
 }
 
 .subnav-link:hover {
-  background-color: #e6f0fa;
+  background-color: #e8dcfb;
 }
 
 .subnav-link.active {
-  background-color: #005b96;
+  background-color: #6A3BC4;
   color: #fff;
 }
 
@@ -134,7 +134,7 @@ body {
 }
 
 .grade-table tr:nth-child(odd) {
-  background: #fafafa;
+  background: #faf7ff;
 }
 
 .grade-table td {
@@ -176,16 +176,31 @@ body {
   color: #fff;
 }
 
-.grade-2 { background: #e74c3c; }
-.grade-3 { background: #e67e22; }
-.grade-4 { background: #f1c40f; color: #111; }
-.grade-5 { background: #2e86de; }
-.grade-6 { background: #27ae60; }
+.grade-2 {
+  background: #e74c3c;
+}
+
+.grade-3 {
+  background: #e67e22;
+}
+
+.grade-4 {
+  background: #f1c40f;
+  color: #fff;
+}
+
+.grade-5 {
+  background: #2e86de;
+}
+
+.grade-6 {
+  background: #27ae60;
+}
 
 .avg-badge {
-  background: #ecf4ff;
-  color: #005b96;
-  box-shadow: 0 0 0 1px #d6e5ff inset;
+  background: #e8dcfb;
+  color: #6A3BC4;
+  box-shadow: 0 0 0 1px #d5c4f5 inset;
 }
 
 /* ---------- PERSONAL INFO ---------- */
@@ -203,7 +218,7 @@ body {
 .big-average {
   font-size: 48px;
   font-weight: 700;
-  color: #0d47a1;
+  color: #6A3BC4;
   margin-top: 20px;
 }
 
@@ -218,15 +233,15 @@ body {
 .rank-table td {
   padding: 10px 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e2d6fb;
 }
 
 .rank-table tr:nth-child(odd) {
-  background-color: #fafafa;
+  background-color: #faf7ff;
 }
 
 .rank-table .self {
-  background-color: #ecf4ff;
+  background-color: #e8dcfb;
   font-weight: 600;
 }
 
@@ -235,7 +250,6 @@ body {
   color: #888;
   font-style: italic;
 }
-
 
 /* ---------- RANKING SCOPE SELECTOR ---------- */
 .scope-strip {
@@ -249,15 +263,17 @@ body {
   text-decoration: none;
   padding: 6px 14px;
   border-radius: 18px;
-  background: #e8f0ff;
-  color: #005b96;
+  background: #f1ebff;
+  color: #6A3BC4;
   font-size: 14px;
   transition: background 0.2s;
 }
 
-.scope-pill:hover { background: #d6e5ff; }
+.scope-pill:hover {
+  background: #e8dcfb;
+}
 
 .scope-pill.active {
-  background: #005b96;
+  background: #6A3BC4;
   color: #fff;
 }

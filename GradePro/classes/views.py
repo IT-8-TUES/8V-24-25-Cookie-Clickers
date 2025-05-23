@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import FormView
-from django.shortcuts import redirect
-from django.urls import reverse_lazy    
-from django.contrib.auth import login, authenticate
+from django.urls import reverse_lazy
 from .forms import ClassCreateForm
-from django.shortcuts import render
 from classes.models import Grades, Class
 from accounts.student_models import StudentProfile, TeacherProfile
 from .models import School
-# Create your views here.
+
+
 def home_page(request):
     if not request.user.is_authenticated:
         return redirect('register')
@@ -18,22 +16,22 @@ def home_page(request):
 class ClassCreateView(FormView):
     template_name = 'classes/create_class.html'
     form_class = ClassCreateForm
-    success_url = reverse_lazy('home_page') 
+    success_url = reverse_lazy('home_page')
 
     def form_valid(self, form):
         print(self.request.POST)
         teacher_profile = TeacherProfile.objects.get(user=self.request.user)
         class_obj = form.save(commit=False)
-        class_obj.teacher = teacher_profile            
+        class_obj.teacher = teacher_profile
         class_obj.save()
-        form.save_m2m()    
+        form.save_m2m()
         return super().form_valid(form)
-    
+
 
 def profile_page(request):
     student_profile = get_object_or_404(StudentProfile, user=request.user)
     tab = request.GET.get("tab", "grades")
-    cls_id = request.GET.get("class")  # for ranking
+    cls_id = request.GET.get("class")
 
     subjects = student_profile.enrolled_classes.all().select_related("school")
 
@@ -45,7 +43,6 @@ def profile_page(request):
         values = []
         for grade in grades_qs:
             values.extend(grade.values)
-
         avg = round(sum(values) / len(values), 2) if values else None
         subject_data[subject] = {
             "grades": values,
@@ -55,31 +52,62 @@ def profile_page(request):
 
     overall_avg = round(sum(overall_values) / len(overall_values), 2) if overall_values else None
 
-    # ─────── Ranking only in current class ───────
+    # ─────── CLASS RANKING ───────
     ranking = None
     place = None
     selected_class = None
 
     if tab == "rank":
-        selected_class = get_object_or_404(Class, id=cls_id) if cls_id else subjects.first()
-        classmates = selected_class.students.all()
+        if cls_id:
+            try:
+                selected_class = Class.objects.get(id=cls_id)
+            except Class.DoesNotExist:
+                selected_class = subjects.first()
+        else:
+            selected_class = subjects.first()
 
-        ranking = []
-        for mate in classmates:
-            mate_grades = Grades.objects.filter(student=mate, school_class=selected_class)
-            mate_values = []
-            for g in mate_grades:
-                mate_values.extend(g.values)
+        if selected_class:
+            classmates = selected_class.students.all()
+            ranking = []
+            for mate in classmates:
+                mate_grades = Grades.objects.filter(student=mate, school_class=selected_class)
+                mate_values = []
+                for g in mate_grades:
+                    mate_values.extend(g.values)
+                avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
+                ranking.append((mate, avg))
 
-            avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
-            ranking.append((mate, avg))
+            ranking.sort(key=lambda x: x[1], reverse=True)
+            for idx, (mate, _) in enumerate(ranking, start=1):
+                if mate.id == student_profile.id:
+                    place = idx
+                    break
 
-        ranking.sort(key=lambda x: x[1], reverse=True)
+    # ─────── SCHOOL RANKING ───────
+    school_ranking = None
+    school_place = None
 
-        for idx, (mate, _) in enumerate(ranking, start=1):
-            if mate.id == student_profile.id:
-                place = idx
-                break
+    if tab == "rank_school":
+        first_class = subjects.first()
+        selected_school = first_class.school if first_class else None
+
+        if selected_school:
+            classmates = StudentProfile.objects.filter(enrolled_classes__school=selected_school).distinct()
+            school_ranking = []
+
+            for mate in classmates:
+                mate_values = []
+                mate_grades = Grades.objects.filter(student=mate)
+                for g in mate_grades:
+                    mate_values.extend(g.values)
+                avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
+                school_ranking.append((mate, avg))
+
+            school_ranking.sort(key=lambda x: x[1], reverse=True)
+            for idx, (mate, _) in enumerate(school_ranking, start=1):
+                if mate.id == student_profile.id:
+                    school_place = idx
+                    break
 
     return render(request, "classes/profile.html", {
         "student": student_profile,
@@ -90,4 +118,6 @@ def profile_page(request):
         "active_tab": tab,
         "subjects": subjects,
         "selected_class": selected_class,
+        "school_ranking": school_ranking,
+        "school_place": school_place,
     })
