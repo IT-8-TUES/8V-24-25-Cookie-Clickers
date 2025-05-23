@@ -109,7 +109,7 @@ def profile_page(request):
                 mate_values = []
                 mate_grades = Grades.objects.filter(student=mate)
                 for g in mate_grades:
-                    mate_values.extend(g.values)
+                    mate_values.append(g.values)
                 avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
                 school_ranking.append((mate, avg))
 
