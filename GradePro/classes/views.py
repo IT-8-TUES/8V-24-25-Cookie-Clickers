@@ -89,7 +89,10 @@ def profile_page(request):
                 mate_grades = Grades.objects.filter(student=mate, school_class=selected_class)
                 mate_values = []
                 for g in mate_grades:
-                    mate_values.extend(g.values)
+                    if isinstance(g.values, list):
+                        mate_values.extend(g.values)
+                    elif isinstance(g.values, int):
+                        mate_values.append(g.values)
                 avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
                 ranking.append((mate, avg))
 
@@ -115,7 +118,10 @@ def profile_page(request):
                 mate_values = []
                 mate_grades = Grades.objects.filter(student=mate)
                 for g in mate_grades:
-                    mate_values.extend(g.values)
+                    if isinstance(g.values, list):
+                        mate_values.extend(g.values)
+                    elif isinstance(g.values, int):
+                        mate_values.append(g.values)
                 avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
                 school_ranking.append((mate, avg))
 
