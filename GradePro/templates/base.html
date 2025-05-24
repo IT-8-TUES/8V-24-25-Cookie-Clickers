@@ -21,6 +21,7 @@
             <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
             {% if request.user.is_teacher %}
             <a href="#" class="nav-link" onclick="goToCreateClass()">Create a class</a>
+            <a href="#" class="nav-link" onclick="goToViewClasses()">View classes</a>
             {% else %}
             <a href="#" class="nav-link" onclick="goToProfile()">Profile</a>
             {% endif %}
@@ -37,13 +38,16 @@
       window.location.href = "http://127.0.0.1:8000/profile";
     }
     function goToHome() {
-      window.location.href = "http://127.0.0.1:8000/";
+      window.location.href = "http://127.0.0.1:8000/home";
     }
     function goToAboutUs() {
       window.location.href = "http://127.0.0.1:8000/aboutus/";
     }
     function goToCreateClass(){
       window.location.href= "http://127.0.0.1:8000/class_create/"
+    }
+    function goToViewClasses(){
+      window.location.href= "http://127.0.0.1:8000/view_classes/"
     }
   </script>
   </body>

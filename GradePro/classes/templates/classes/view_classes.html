@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}View Classes{% endblock %}
+
+
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'classes/view_classes.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-layout">
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Your Classes</h2>
+      <ul id="class-list">
+        {% for cls in classes %}
+          <li>
+            <button onclick="loadStudents({{ cls.id }})">{{ cls.subject }}</button>
+          </li>
+        {% empty %}
+          <li>No classes assigned.</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+
+      <h3>Students</h3>
+      <div id="student-details">
+        <p>Select a class to see students.</p>
+      </div>
+    </div>
+</div>
+<script>
+  let selectedGrades = {};  // Map of studentId => selectedGrade
+
+function loadStudents(classId) {
+  fetch(`/get_students/${classId}/`)
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('student-details');
+      container.innerHTML = '';
+
+      data.students.forEach((student, index) => {
+        const gradesHtml = student.grades
+          .map(grade => `<span class="grade grade-${grade}">${grade}</span>`)
+          .join(' ');
+
+        const gradeButtons = [2, 3, 4, 5, 6]
+          .map(g => `
+            <button class="grade grade-${g} grade-button" 
+                    onclick="selectGrade(${student.id}, ${g}, this)">
+              ${g}
+            </button>
+          `)
+          .join(' ');
+
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <div class="students">
+            <p>${index + 1}: ${student.name}</p>
+            <p>Grades: ${gradesHtml}</p>
+            <div>
+              Assign grade:
+              ${gradeButtons}
+              <button class="confirm-button" onclick="assignGrade(${student.id}, ${classId})">Confirm</button>
+            </div>
+            <hr/>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    });
+}
+
+function selectGrade(studentId, grade, button) {
+  // Save selection
+  selectedGrades[studentId] = grade;
+
+  // Remove .selected from all buttons of this student
+  const buttons = button.parentElement.querySelectorAll('.grade-button');
+  buttons.forEach(btn => btn.classList.remove('selected'));
+
+  // Highlight selected
+  button.classList.add('selected');
+}
+
+function assignGrade(studentId, classId) {
+  const grade = selectedGrades[studentId];
+  if (grade === undefined) {
+    alert("Please select a grade first.");
+    return;
+  }
+
+  fetch('/assign_grade/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': '{{ csrf_token }}'  
+    },
+    body: JSON.stringify({
+      student_id: studentId,
+      class_id: classId,
+      grade: grade
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert("Grade submitted!");
+      loadStudents(classId); // Refresh data
+    })
+    .catch(err => {
+      console.error("Submission failed", err);
+    });
+}
+</script>
+{% endblock %}

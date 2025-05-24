@@ -10,93 +10,16 @@
 {% block content %}
 <div class="page-layout">
   {% if request.user.is_teacher %}
-    
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <h3>Your Classes</h3>
-      <ul id="class-list">
-        {% for cls in classes %}
-          <li>
-            <button onclick="loadStudents({{ cls.id }})">{{ cls.subject }}</button>
-          </li>
-        {% empty %}
-          <li>No classes assigned.</li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    <!-- Main Content -->
     <div class="main-content">
-
-
-      <h3>Students</h3>
-      <div id="student-details">
-        <p>Select a class to see students.</p>
+        <h2>Welcome, {{ request.user.first_name }}</h2>
       </div>
-    </div>
-  
   {% else %}
-    <div style="width: 100%; padding: 1rem;">
+    <div class="main-content">
       <h2>Welcome, {{ request.user.first_name }}</h2>
       <p>You can check your grades, personal info, and more from your profile.</p>
     </div>
   {% endif %}
 </div>
 
-<script>
-  function loadStudents(classId) {
-    fetch(`/get_students/${classId}/`)
-      .then(response => response.json())
-      .then(data => {
-  const container = document.getElementById('student-details');
-  container.innerHTML = '';
-  data.students.forEach((student, index) => {
-    // Wrap each grade number with a span with the class for color
-    const gradesHtml = student.grades.map(g => `<span class="grade-${g}">${g}</span>`).join(' ');
 
-    const div = document.createElement('div');
-    div.innerHTML = `
-      <p>Student ${index + 1}: ${student.name}</p>
-      <p>Grades: ${gradesHtml}</p>
-      <div>
-        Grade:
-        <select id="grade-${student.id}">
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-        </select>
-        <button onclick="submitGrade(${student.id}, ${classId})">Confirm</button>
-      </div>
-      <hr/>
-    `;
-    container.appendChild(div);
-  });
-});
-  }
-
-  function submitGrade(studentId, classId) {
-    const grade = document.getElementById(`grade-${studentId}`).value;
-    fetch('/assign_grade/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': '{{ csrf_token }}'
-      },
-      body: JSON.stringify({
-        student_id: studentId,
-        class_id: classId,
-        grade_value:  parseInt(grade),
-      })
-    }).then(response => {
-      if (response.ok) {
-        alert('Grade submitted successfully!');
-        loadStudents(classId);
-      } else {
-        alert('Something went wrong.');
-      }
-    });
-  }
-</script>
 {% endblock %}

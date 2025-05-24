@@ -12,18 +12,20 @@ import json
 def home_page(request):
     if not request.user.is_authenticated:
         return redirect('register')
-    if request.user.is_teacher:
-        classes = None
-        teacher_profile = request.user.teacherprofile
-        classes = Class.objects.filter(teacher=teacher_profile)
-        return render(request, "classes/home.html", {'classes': classes})
     else:
         return render(request, "classes/home.html")
     
 def hero_page(request):
     return render(request, "classes/hero.html")
 
-
+def view_classes(request):
+    if request.user.is_teacher:
+        classes = None
+        teacher_profile = request.user.teacherprofile
+        classes = Class.objects.filter(teacher=teacher_profile)
+        return render(request, "classes/view_classes.html", {'classes': classes})
+    else:
+        return render(request, "classes/home.html")
 
 
 class ClassCreateView(FormView):
@@ -55,7 +57,7 @@ def profile_page(request):
         grades_qs = Grades.objects.filter(student=student_profile, school_class=subject)
         values = []
         for grade in grades_qs:
-            values.append(grade.values)
+            values.extend(grade.values)
 
         avg = round(sum(values) / len(values), 2) if values else None
         subject_data[subject] = {
@@ -87,7 +89,7 @@ def profile_page(request):
                 mate_grades = Grades.objects.filter(student=mate, school_class=selected_class)
                 mate_values = []
                 for g in mate_grades:
-                    mate_values.append(g.values)
+                    mate_values.extend(g.values)
                 avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
                 ranking.append((mate, avg))
 
@@ -113,7 +115,7 @@ def profile_page(request):
                 mate_values = []
                 mate_grades = Grades.objects.filter(student=mate)
                 for g in mate_grades:
-                    mate_values.append(g.values)
+                    mate_values.extend(g.values)
                 avg = round(sum(mate_values) / len(mate_values), 2) if mate_values else 0
                 school_ranking.append((mate, avg))
 
@@ -170,11 +172,11 @@ def assign_grade(request):
         data = json.loads(request.body)
         student_id = data.get('student_id')
         class_id = data.get('class_id')
-        grade_value = data.get('grade_value')
+        grade_value = data.get('grade') 
         print("Received data:", data)
         # Validate values here if needed
 
-        grade = Grades.objects.create(student_id=student_id, school_class_id=class_id, values=grade_value)
+        grade = Grades.objects.create(student_id=student_id, school_class_id=class_id, values=[grade_value])
         return JsonResponse({"success": True, "grade": grade.values})
 
     return JsonResponse({"error": "Invalid request"}, status=400)
