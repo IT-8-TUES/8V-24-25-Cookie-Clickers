@@ -31,10 +31,21 @@ body {
   color: #4d2d96;
   font-weight: 700;
 }
-  .main-content {
-    flex-grow: 1;
-    padding: 1rem;
-  }
+.main-content {
+  flex-grow: 1;
+  padding: 1rem;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+#class-name-heading {
+  text-align: right;
+}
 
 #class-list {
   list-style-type: none; /* removes the bullet dots */
@@ -113,7 +124,7 @@ hr{
 .confirm-button {
   min-width: 26px; 
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #4d2d96;
+  background-color: #7453c1;
   font-size: 14px;
   color: white;
   border: none;

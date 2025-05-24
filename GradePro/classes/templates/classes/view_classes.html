@@ -19,7 +19,7 @@
       <ul id="class-list">
         {% for cls in classes %}
           <li>
-            <button onclick="loadStudents({{ cls.id }})">{{ cls.subject }}</button>
+            <button onclick="loadStudents({{ cls.id }},'{{ cls.subject}}')">{{ cls.subject }}</button>
           </li>
         {% empty %}
           <li>No classes assigned.</li>
@@ -28,19 +28,21 @@
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
-
-
-      <h3>Students</h3>
-      <div id="student-details">
-        <p>Select a class to see students.</p>
-      </div>
-    </div>
+<div class="main-content">
+  <div class="header-row">
+    <h3>Students</h3>
+    <h3 id="class-name-heading">Class: None</h3>
+  </div>
+  <div id="student-details">
+    <p>Select a class to see students.</p>
+  </div>
+</div>
 </div>
 <script>
   let selectedGrades = {};  // Map of studentId => selectedGrade
 
-function loadStudents(classId) {
+function loadStudents(classId,className) {
+  document.getElementById('class-name-heading').innerText = `Class: ${className}`;
   fetch(`/get_students/${classId}/`)
     .then(response => response.json())
     .then(data => {

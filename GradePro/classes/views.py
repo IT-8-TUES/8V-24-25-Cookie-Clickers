@@ -148,7 +148,7 @@ def get_class_students(request, class_id):
         school_class = Class.objects.get(id=class_id)
     except Class.DoesNotExist:
         return JsonResponse({"error": "Class not found"}, status=404)
-
+    class_name = Class.objects.get(id=class_id).subject
     students = school_class.students.all()
     data = []
     for s in students:
