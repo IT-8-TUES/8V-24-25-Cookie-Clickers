@@ -15,7 +15,7 @@
     <form method="post">
         {% csrf_token %}
         
-        <!-- Subject field -->
+
         <div>
             <label for="id_subject"><i class="fas fa-book"></i> Subject:</label>
             {{ form.subject }}
@@ -28,13 +28,13 @@
         </div>
           
 
-        <!-- Search input -->
+  
         <div>
             <label for="student-search"><i class="fas fa-search"></i> Search Students:</label>
             <input type="text" id="student-search" placeholder="Search by name..." onkeyup="filterStudents()">
         </div>
 
-        <!-- All students list -->
+
         <div id="student-list" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
             {% for student in form.students.field.queryset %}
                 <div class="student-entry" data-id="{{ student.id }}">
@@ -49,13 +49,11 @@
             {% endfor %}
         </div>
 
-        <!-- Selected students list -->
         <div style="margin-top: 20px;">
             <h4><i class="fas fa-user-check"></i> Selected Students:</h4>
             <ul id="selected-students-list"></ul>
         </div>
 
-        <!-- Hidden select field to hold selected student IDs -->
         <select id="id_students" name="students" multiple style="display: none;"></select>
 
         <button type="submit" class="class-button">Create Class</button>
@@ -75,17 +73,14 @@
         const list = document.getElementById('selected-students-list');
         const select = document.getElementById('id_students');
 
-        // Prevent adding duplicates
         if (document.getElementById(`student-item-${id}`)) return;
 
-        // Add to visual list
         const li = document.createElement('li');
         li.id = `student-item-${id}`;
         li.innerHTML = `${name} <button type="button" class="icon-button" onclick="removeStudent(${id})"><i class="fas fa-times" id="icon-select"></i></button>`;
 
         list.appendChild(li);
 
-        // Add to hidden select
         const option = document.createElement('option');
         option.value = id;
         option.selected = true;
@@ -94,11 +89,9 @@
     }
 
     function removeStudent(id) {
-        // Remove from visual list
         const li = document.getElementById(`student-item-${id}`);
         if (li) li.remove();
 
-        // Remove from hidden select
         const option = document.getElementById(`student-option-${id}`);
         if (option) option.remove();
     }
