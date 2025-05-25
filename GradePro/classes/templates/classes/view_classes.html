@@ -64,18 +64,21 @@ function loadStudents(classId, className) {
           .join(' ');
 
         const div = document.createElement('div');
-        div.innerHTML = `
-          <div class="students">
-            <p>${index + 1}: ${student.name}</p>
-            <p>Grades: ${gradesHtml}</p>
-            <div>
-              Assign grade:
-              ${gradeButtons}
-              <button class="confirm-button" onclick="assignGrade(${student.id}, ${classId}, '${className}')">Confirm</button>
-            </div>
-            <hr/>
-          </div>
-        `;
+div.innerHTML = `
+  <div class="students">
+    <div class="students_grades">
+      <p><strong>${index + 1}.</strong> ${student.name}: ${gradesHtml}</p>
+    </div>
+    <div class="students_assign">
+      <div>
+        <strong>Assign grade:</strong>
+        ${gradeButtons}
+      </div>
+      <button class="confirm-button" onclick="assignGrade(${student.id}, ${classId}, '${className}')">Confirm</button>
+    </div>
+  </div>
+  <hr/>
+`;
         container.appendChild(div);
       });
 
