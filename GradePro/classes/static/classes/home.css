@@ -11,7 +11,17 @@ body {
   }
 
   .main-content {
+    align-self: center;
     width: 50rem;
     flex-grow: 1;
     padding: 1rem;
+  }
+
+  ul{
+    display:flex;
+    font-weight: 500;
+    font-size: large;
+    justify-content: center;
+    padding:1rem;
+    margin-left:1rem
   }

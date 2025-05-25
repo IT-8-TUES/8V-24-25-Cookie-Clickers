@@ -146,3 +146,73 @@ hr{
 .confirm-button:active {
   transform: scale(0.98);
 }
+
+.student-option {
+  padding: 8px;
+  margin: 4px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.student-option:hover {
+  background-color: #f1f1f1;
+}
+.student-option.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.confirm-button-student{
+  min-width: 26px; 
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #7453c1;
+  font-size: 14px;
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin: 0.5rem 0rem;
+  margin-left:0rem;
+}
+
+.confirm-button-student:hover {
+  background-color: #d5c4f5;
+  color: #4d2d96;
+  transform: scale(1.05);
+}
+
+.confirm-button-student:active {
+  transform: scale(0.98);
+}
+
+.add-student-button{
+  min-width: 0.1rem; 
+  height: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ccc;
+  font-size: 14px;
+  color: #4d2d96;
+  border: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  margin-top:0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-left:0rem;
+}
+
+.add-student-button:hover {
+  background-color: #7453c1;
+  color: white;
+  transform: scale(1.05);
+}
+
+.add-student-button:active {
+  transform: scale(0.98);
+}

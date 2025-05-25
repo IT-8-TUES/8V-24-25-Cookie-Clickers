@@ -13,7 +13,7 @@
 
 <div class="page-layout">
     
-    <!-- Sidebar -->
+
     <div class="sidebar">
       <h2>Your Classes</h2>
       <ul id="class-list">
@@ -27,7 +27,7 @@
       </ul>
     </div>
 
-    <!-- Main Content -->
+
 <div class="main-content">
   <div class="header-row">
     <h3>Students</h3>
@@ -39,9 +39,9 @@
 </div>
 </div>
 <script>
-  let selectedGrades = {};  // Map of studentId => selectedGrade
+  let selectedGrades = {}; 
 
-function loadStudents(classId,className) {
+function loadStudents(classId, className) {
   document.getElementById('class-name-heading').innerText = `Class: ${className}`;
   fetch(`/get_students/${classId}/`)
     .then(response => response.json())
@@ -71,35 +71,38 @@ function loadStudents(classId,className) {
             <div>
               Assign grade:
               ${gradeButtons}
-              <button class="confirm-button" onclick="assignGrade(${student.id}, ${classId})">Confirm</button>
+              <button class="confirm-button" onclick="assignGrade(${student.id}, ${classId}, '${className}')">Confirm</button>
             </div>
             <hr/>
           </div>
         `;
         container.appendChild(div);
       });
+
+      // ✅ Append "Add Student" section only ONCE after the list
+      const addStudentDiv = document.createElement('div');
+      addStudentDiv.innerHTML = `
+      <button class="add-student-button" onclick='showAddStudentList(${classId}, ${JSON.stringify(className)})'>Add Student</button>
+      <div id="add-student-list-${classId}" style="display:none; margin-top: 1rem;"></div>`;
+      container.appendChild(addStudentDiv);
     });
 }
 
 function selectGrade(studentId, grade, button) {
-  // Save selection
   selectedGrades[studentId] = grade;
-
-  // Remove .selected from all buttons of this student
   const buttons = button.parentElement.querySelectorAll('.grade-button');
   buttons.forEach(btn => btn.classList.remove('selected'));
-
-  // Highlight selected
   button.classList.add('selected');
 }
 
-function assignGrade(studentId, classId) {
+function assignGrade(studentId, classId,className) {
+  
   const grade = selectedGrades[studentId];
   if (grade === undefined) {
     alert("Please select a grade first.");
     return;
   }
-
+  
   fetch('/assign_grade/', {
     method: 'POST',
     headers: {
@@ -115,11 +118,76 @@ function assignGrade(studentId, classId) {
     .then(res => res.json())
     .then(data => {
       alert("Grade submitted!");
-      loadStudents(classId); // Refresh data
+      document.getElementById('class-name-heading').innerText = `Class: ${className}`;
+      loadStudents(classId,className);
     })
     .catch(err => {
       console.error("Submission failed", err);
     });
+}
+let selectedStudentId = null;
+
+function showAddStudentList(classId, className) {
+  console.log("showAddStudentList called with:", classId, className);
+  const listDiv = document.getElementById(`add-student-list-${classId}`);
+  listDiv.innerHTML = '<p>Loading students...</p>';
+  listDiv.style.display = 'block';
+
+  fetch(`/students_not_in_class/${classId}/`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.students.length === 0) {
+        listDiv.innerHTML = '<p>No students available to add.</p>';
+        return;
+      }
+
+      const optionsHtml = data.students.map(s => `
+        <div class="student-option" onclick="selectStudentToAdd(${s.id}, this)">
+          ${s.name}
+        </div>
+      `).join('');
+
+      listDiv.innerHTML = `
+        <p>Select a student to add:</p>
+        ${optionsHtml}
+        <button class="confirm-button-student" onclick="confirmAddStudent(${classId}, '${className}')">Add</button>
+      `;
+    });
+}
+
+function selectStudentToAdd(studentId, el) {
+  selectedStudentId = studentId;
+  document.querySelectorAll('.student-option').forEach(div => div.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function confirmAddStudent(classId, className) {
+    console.log("confirmAddStudent called with:", classId, className, "selectedStudentId:", selectedStudentId);
+  if (!selectedStudentId) {
+    alert("Please select a student.");
+    return;
+  }
+
+  fetch('/add_student_to_class/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: JSON.stringify({
+      student_id: selectedStudentId,
+      class_id: classId
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert("Student added!");
+      loadStudents(classId, className);
+    } else {
+      alert("Error: " + data.error);
+    }
+  });
 }
 </script>
 {% endblock %}

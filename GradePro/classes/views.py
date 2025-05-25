@@ -56,8 +56,12 @@ def profile_page(request):
     for subject in subjects:
         grades_qs = Grades.objects.filter(student=student_profile, school_class=subject)
         values = []
+        mate_values = [] 
         for grade in grades_qs:
-            values.extend(grade.values)
+            if isinstance(grade.values, list):
+                mate_values.extend(grade.values)
+            elif isinstance(grade.values, int):
+                mate_values.append(grade.values)
 
         avg = round(sum(values) / len(values), 2) if values else None
         subject_data[subject] = {
@@ -186,3 +190,37 @@ def assign_grade(request):
         return JsonResponse({"success": True, "grade": grade.values})
 
     return JsonResponse({"error": "Invalid request"}, status=400)
+
+def students_not_in_class(request, class_id):
+    try:
+        school_class = Class.objects.get(id=class_id)
+        students_in_class = school_class.students.all()
+        all_students = StudentProfile.objects.all()
+        not_in_class = all_students.exclude(id__in=students_in_class.values_list('id', flat=True))
+        
+        student_data = [{"id": s.id, "name": s.user.get_full_name()} for s in not_in_class]
+        return JsonResponse({"students": student_data})
+    except Class.DoesNotExist:
+        return JsonResponse({"error": "Class not found"}, status=404)
+
+@csrf_exempt
+def add_student_to_class(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        student_id = data.get("student_id")
+        class_id = data.get("class_id")
+
+        try:
+            school_class = Class.objects.get(id=class_id)
+        except Class.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Class not found"})
+
+        try:
+            student = StudentProfile.objects.get(id=student_id)
+        except StudentProfile.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Student not found"})
+
+        school_class.students.add(student)
+        return JsonResponse({"success": True})
+
+    return JsonResponse({"success": False, "error": "Invalid request"})

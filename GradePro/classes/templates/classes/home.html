@@ -15,8 +15,15 @@
       </div>
   {% else %}
     <div class="main-content">
-      <h2>Welcome, {{ request.user.first_name }}</h2>
-      <p>You can check your grades, personal info, and more from your profile.</p>
+      <h2>Welcome, {{ user.first_name }}!</h2>
+      <p>Track your academic progress in real time.</p>
+      <ul>
+        <li>View your grades for each class.</li>
+        <li>Check your average in any subject.</li>
+        <li>See your overall grade across all classes.</li>
+        <li>Find out your ranking in each class.</li>
+        <li>Compare your performance with the rest of the school.</li>
+      </ul>
     </div>
   {% endif %}
 </div>
