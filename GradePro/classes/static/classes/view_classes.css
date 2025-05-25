@@ -11,19 +11,20 @@ body {
   background-color: #f8f8ff;
   color: #333;
 }
+
 .page-layout {
-    display: flex;
-    margin: 0;
-    padding: 0;
-    height: 100vh; 
-  }
+  display: flex;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
 
 .sidebar {
   height: 100%;
-  width: 250px;
+  width: 15.625rem; 
   background: #e8dcfb;
-  padding: 20px;
-  border-right: 1px solid #d5c4f5;
+  padding: 1.25rem; 
+  border-right: 0.0625rem solid #d5c4f5; 
 }
 
 .sidebar h2 {
@@ -31,6 +32,7 @@ body {
   color: #4d2d96;
   font-weight: 700;
 }
+
 .main-content {
   flex-grow: 1;
   padding: 1rem;
@@ -48,9 +50,9 @@ body {
 }
 
 #class-list {
-  list-style-type: none; /* removes the bullet dots */
+  list-style-type: none;
   padding: 0.5rem;
-  padding-left:0;
+  padding-left: 0;
   margin: 0;
 }
 
@@ -62,79 +64,74 @@ body {
   width: 100%;
   background-color: #e8dcfb;
   border: none;
-  padding: 10px ;
-  padding-left:0;
-  padding-right: 0;
+  padding: 0.625rem 0;
   text-align: left;
   font-size: 1.25rem;
   cursor: pointer;
   color: #333;
   transition: background-color 0.2s ease;
-  border-radius: 5px;
+  border-radius: 0.3125rem; 
 }
 
 #class-list button:hover {
-  padding-left:0;
-  padding-right: 0;
-  background-color: rgba(0, 0, 0, 0.05); /* slight darkening on hover */
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-hr{
-    width: 100%; 
-    border: none; 
-    height: 1px; 
-    background-color: #ccc; 
-    margin-top: 0.5rem;
+hr {
+  width: 100%;
+  border: none;
+  height: 0.0625rem; 
+  background-color: #ccc;
+  margin-top: 0.5rem;
 }
 
-.students{
-    display: flex; 
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap; 
-    justify-content: center;
-    font-size: 15px;
-    margin-top: 1rem;
+.students {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.9375rem; 
+  margin-top: 1rem;
 }
 
-.grade{
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;  
-  padding: 3px 12px;
-  border-radius: 12px;
-  font-size: 14px;
+.grade {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0.1875rem 0.75rem; 
+  border-radius: 0.75rem; 
+  font-size: 0.875rem; 
   font-weight: 600;
-  min-width: 26px;
+  min-width: 1.625rem; 
   text-align: center;
   color: #fff;
   cursor: pointer;
   border: none;
 }
 
-
 .grade-2 { background: #e74c3c; }
 .grade-3 { background: #e67e22; }
-.grade-4 { background: #f1c40f; color: #fff;}
+.grade-4 { background: #f1c40f; color: #fff; }
 .grade-5 { background: #2e86de; }
 .grade-6 { background: #27ae60; }
 
 .grade-button.selected {
-  border: 2px solid #000;
+  border: 0.125rem solid #000; 
 }
 
 .confirm-button {
-  min-width: 26px; 
+  min-width: 1.625rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #7453c1;
-  font-size: 14px;
+  font-size: 0.875rem; 
   color: white;
   border: none;
   font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-left:0.5rem;
+  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.1);
+  margin-left: 0.5rem;
 }
 
 .confirm-button:hover {
@@ -148,35 +145,36 @@ hr{
 }
 
 .student-option {
-  padding: 8px;
-  margin: 4px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.5rem; 
+  margin: 0.25rem 0; 
+  border: 0.0625rem solid #ccc; 
+  border-radius: 0.25rem;
   cursor: pointer;
 }
+
 .student-option:hover {
   background-color: #f1f1f1;
 }
+
 .student-option.selected {
   background-color: #007bff;
   color: white;
 }
 
-.confirm-button-student{
-  min-width: 26px; 
+.confirm-button-student {
+  min-width: 1.625rem; 
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #7453c1;
-  font-size: 14px;
+  font-size: 0.875rem; 
   color: white;
   border: none;
   font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 0.5rem 1rem; 
+  border-radius: 0.5rem; 
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin: 0.5rem 0rem;
-  margin-left:0rem;
+  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.1);
+  margin: 0.5rem 0;
 }
 
 .confirm-button-student:hover {
@@ -189,22 +187,22 @@ hr{
   transform: scale(0.98);
 }
 
-.add-student-button{
-  min-width: 0.1rem; 
+.add-student-button {
+  min-width: 0.00625rem; 
   height: auto;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #ccc;
-  font-size: 14px;
+  font-size: 0.875rem; 
   color: #4d2d96;
   border: none;
   font-weight: 600;
-  padding: 8px 16px;
-  margin-top:0.5rem;
-  border-radius: 8px;
+  padding: 0.5rem 1rem; 
+  margin-top: 0.5rem;
+  border-radius: 0.5rem; 
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-left:0rem;
+  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.1); 
+  margin-left: 0;
 }
 
 .add-student-button:hover {
