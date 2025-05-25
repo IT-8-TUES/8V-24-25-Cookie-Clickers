@@ -130,6 +130,13 @@ let selectedStudentId = null;
 function showAddStudentList(classId, className) {
   console.log("showAddStudentList called with:", classId, className);
   const listDiv = document.getElementById(`add-student-list-${classId}`);
+  
+  // If the list is already visible, hide it and return
+  if (listDiv.style.display === 'block') {
+    listDiv.style.display = 'none';
+    return;
+  }
+
   listDiv.innerHTML = '<p>Loading students...</p>';
   listDiv.style.display = 'block';
 
@@ -152,6 +159,10 @@ function showAddStudentList(classId, className) {
         ${optionsHtml}
         <button class="confirm-button-student" onclick="confirmAddStudent(${classId}, '${className}')">Add</button>
       `;
+    })
+    .catch(error => {
+      console.error('Error fetching students:', error);
+      listDiv.innerHTML = '<p>Error loading students.</p>';
     });
 }
 
