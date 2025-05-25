@@ -97,8 +97,7 @@ function selectGrade(studentId, grade, button) {
   button.classList.add('selected');
 }
 
-function assignGrade(studentId, classId,className) {
-  
+function assignGrade(studentId, classId, className) {
   const grade = selectedGrades[studentId];
   if (grade === undefined) {
     alert("Please select a grade first.");
@@ -117,15 +116,23 @@ function assignGrade(studentId, classId,className) {
       grade: grade
     })
   })
-    .then(res => res.json())
-    .then(data => {
-      alert("Grade submitted!");
-      document.getElementById('class-name-heading').innerText = `Class: ${className}`;
-      loadStudents(classId,className);
-    })
-    .catch(err => {
-      console.error("Submission failed", err);
-    });
+  .then(res => res.json())
+  .then(data => {
+    alert("Grade submitted!");
+    document.getElementById('class-name-heading').innerText = `Class: ${className}`;
+    
+
+    delete selectedGrades[studentId];
+    
+
+    const buttons = document.querySelectorAll(`button[onclick^="selectGrade(${studentId},"]`);
+    buttons.forEach(btn => btn.classList.remove('selected'));
+    
+    loadStudents(classId, className);
+  })
+  .catch(err => {
+    console.error("Submission failed", err);
+  });
 }
 let selectedStudentId = null;
 
