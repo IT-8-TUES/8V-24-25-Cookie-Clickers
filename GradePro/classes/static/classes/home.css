@@ -1,27 +1,144 @@
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f8ff; 
-    color: #333;
+/* Base Styles - ONLY COLOR CHANGES */
+
+.welcome-section {
+  margin-bottom: 3rem;
+  text-align: center;
 }
-  .page-layout {
-    display: flex;
-    margin: 0;
-    padding: 0;
-  }
 
-  .main-content {
-    align-self: center;
-    width: 50rem;
-    flex-grow: 1;
-    padding: 1rem;
-  }
+.welcome-header h1 {
+  font-size: 2.5rem;
+  color: #4a2a8a; /* Changed to darker purple */
+  margin-bottom: 0.5rem;
+}
 
-  ul{
-    display:flex;
-    font-weight: 500;
-    font-size: large;
-    justify-content: center;
-    padding:1rem;
-    margin-left:1rem
+.subheading {
+  font-size: 1.2rem;
+  color: #8862D0; /* Changed to lighter purple */
+  font-weight: 400;
+}
+
+/* Grid Layout - NO CHANGES */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding-bottom:3rem;
+  padding-left:1rem;
+  padding-right:1rem;
+}
+
+/* Feature Cards - ONLY COLOR CHANGES */
+.feature-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(106, 59, 196, 0.1); /* Purple shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding-bottom:1.5rem;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(106, 59, 196, 0.15); /* Purple shadow */
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  color: #6A3BC4; /* Purple */
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.feature-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.feature-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e6e0f5; /* Light purple */
+  display: flex;
+  align-items: center;
+}
+
+.feature-list li:before {
+  content: "•";
+  color: #6A3BC4; /* Purple */
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+/* Quick Links - ONLY COLOR CHANGES */
+.quick-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+.quick-link-btn {
+  display: block;
+  padding: 0.8rem;
+  background-color: #f3f0fa; /* Light purple */
+  color: #6A3BC4; /* Purple */
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.quick-link-btn:hover {
+  background-color: #6A3BC4; /* Purple */
+  color: white;
+}
+
+/* Performance Card - ONLY COLOR CHANGES */
+.performance-card {
+  grid-column: span 1;
+}
+
+.progress-visual {
+  margin-top: 1.5rem;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #e6e0f5; /* Light purple */
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #6A3BC4; /* Purple */
+  border-radius: 5px;
+}
+
+/* Responsive Adjustments - NO CHANGES */
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
   }
+  
+  .welcome-header h1 {
+    font-size: 2rem;
+  }
+  
+  .subheading {
+    font-size: 1rem;
+  }
+}
+
+.card-icon svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 1rem;
+  color: #6A3BC4; /* Purple */
+}

@@ -13,6 +13,34 @@ import json
 def home_page(request):
     if not request.user.is_authenticated:
         return redirect('register')
+    context = {}
+    if not request.user.is_teacher:
+        student_profile = get_object_or_404(StudentProfile, user=request.user)
+        subjects = student_profile.enrolled_classes.all().select_related("school")
+        overall_values = []
+        
+        for subject in subjects:
+            grades_qs = Grades.objects.filter(student=student_profile, school_class=subject)
+            values = []
+            
+            for grade in grades_qs:
+                if isinstance(grade.values, list):
+                    values.extend(grade.values)
+                elif isinstance(grade.values, (int, float)):  # Include float for decimal grades
+                    values.append(grade.values)
+            
+            if values:  # Only calculate if grades exist
+                subject_avg = round(sum(values) / len(values), 2)
+                overall_values.extend(values)
+        
+        if overall_values:  # Only calculate if any grades exist
+            overall_avg = round(sum(overall_values) / len(overall_values), 2)
+        else:
+            overall_avg = None
+        
+        context = {'overall_avg': overall_avg}
+        print("Calculated overall_avg:", overall_avg)  # Debug print
+        return render(request, "classes/home.html", context)
     else:
         return render(request, "classes/home.html")
     
@@ -53,7 +81,7 @@ def profile_page(request):
 
     subject_data = {}
     overall_values = []
-
+    
     for subject in subjects:
         grades_qs = Grades.objects.filter(student=student_profile, school_class=subject)
         values = []
