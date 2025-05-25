@@ -5,7 +5,7 @@ Get-ChildItem -Recurse -Filter "*.pyc" | Where-Object { $_.FullName -like "*\mig
 
 в power shell за изтриване на миграциите и python manage.py makemigrations и python manage.py migrate за създаване на новите и после пак python manage.py runserver
 
-Венцислав Желев е направил следните html страници - login.html, register.html, create_class.html
+Венцислав Желев е направил следните html страници - login.html, register.html, create_class.html, base.html
 Константин Митов е направил - hero.html, profile.html, about_us.html
 Кирил Елисеев е създал следните страници - home.html, view_classes.html
 
