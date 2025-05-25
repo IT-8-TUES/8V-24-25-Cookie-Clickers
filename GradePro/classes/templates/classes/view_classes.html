@@ -79,7 +79,6 @@ function loadStudents(classId, className) {
         container.appendChild(div);
       });
 
-      // ✅ Append "Add Student" section only ONCE after the list
       const addStudentDiv = document.createElement('div');
       addStudentDiv.innerHTML = `
       <button class="add-student-button" onclick='showAddStudentList(${classId}, ${JSON.stringify(className)})'>Add Student</button>
@@ -131,7 +130,7 @@ function showAddStudentList(classId, className) {
   console.log("showAddStudentList called with:", classId, className);
   const listDiv = document.getElementById(`add-student-list-${classId}`);
   
-  // If the list is already visible, hide it and return
+
   if (listDiv.style.display === 'block') {
     listDiv.style.display = 'none';
     return;
