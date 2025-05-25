@@ -8,6 +8,7 @@ from .models import School
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+
 # Create your views here.
 def home_page(request):
     if not request.user.is_authenticated:
@@ -174,6 +175,7 @@ def profile_page(request):
         "school_ranking": school_ranking,
         "school_place": school_place,
     })
+
 def get_class_students(request, class_id):
     try:
         school_class = Class.objects.get(id=class_id)

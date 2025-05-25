@@ -2,24 +2,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>GrAdesPro</title>
-    <link rel="stylesheet" href="{% static 'classes/hero.css' %}">
+  <meta charset="UTF-8" />
+  <title>GrAdesPro</title>
+  <link rel="stylesheet" href="{% static 'classes/hero.css' %}" />
 </head>
 <body>
-    <section class="hero">
-        <h1 class="title">Welcome to GrAdesPro</h1>
-        <p class="subtitle">Your grades. Simplified.</p>
-        <div class="options">
-            <a href="http://127.0.0.1:8000/account/login/" class="card login" aria-label="Log in to your account">
-                <span class="label">Log&nbsp;In</span>
-                <p class="hint">Access your dashboard</p>
-            </a>
-            <a href="http://127.0.0.1:8000/account/register/" class="card register" aria-label="Create a new account">
-                <span class="label">Create&nbsp;Account</span>
-                <p class="hint">Join the platform</p>
-            </a>
-        </div>
-    </section>
+  <section class="hero">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+
+    <h1 class="title">Welcome to GrAdesPro</h1>
+    <p class="subtitle">Your grades. Simplified.</p>
+
+    <div class="options">
+      <a href="{% url 'login' %}" class="card login" aria-label="Log in to your account">
+        <span class="label">Log&nbsp;In</span>
+        <p class="hint">Access your dashboard</p>
+      </a>
+      <a href="{% url 'register' %}" class="card register" aria-label="Create a new account">
+        <span class="label">Create&nbsp;Account</span>
+        <p class="hint">Join the platform</p>
+      </a>
+    </div>
+  </section>
 </body>
 </html>

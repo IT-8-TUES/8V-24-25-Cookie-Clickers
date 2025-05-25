@@ -9,46 +9,106 @@
     {% block css_files %}
     {% endblock %}
     <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-...your-integrity-hash..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-container">
-        <div class="nav-logo" onclick="goToHome()" style="cursor: pointer">
-          GrAdesPro
+  <body class="layout">
+    <div class="page-container">
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo" onclick="goToHome()" style="cursor: pointer">
+            GrAdesPro
+          </div>
+          <div class="nav-links">
+              <a href="#" class="nav-link" onclick="goToHome()">Home</a>
+              <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
+              {% if request.user.is_teacher %}
+              <a href="#" class="nav-link" onclick="goToCreateClass()">Create a class</a>
+              <a href="#" class="nav-link" onclick="goToViewClasses()">View classes</a>
+              {% else %}
+              <a href="#" class="nav-link" onclick="goToProfile()">Profile</a>
+              {% endif %}
+              <form action="{% url 'logout' %}" method="post" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" class="nav-link-button">Log Out</button>
+              </form>
+          </div>
         </div>
-        <div class="nav-links">
-            <a href="#" class="nav-link" onclick="goToHome()">Home</a>
-            <a href="#" class="nav-link" onclick="goToAboutUs()">About Us</a>
-            {% if request.user.is_teacher %}
-            <a href="#" class="nav-link" onclick="goToCreateClass()">Create a class</a>
-            <a href="#" class="nav-link" onclick="goToViewClasses()">View classes</a>
-            {% else %}
-            <a href="#" class="nav-link" onclick="goToProfile()">Profile</a>
-            {% endif %}
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="nav-link-button">Log Out</button>
-            </form>
+      </nav>
+      <main class="content-wrapper">
+        {% block content %}{% endblock %}
+      </main>
+      <footer class="footer">
+        <div class="footer-top">
+          <div class="footer-highlight">
+            <div><i class="fas fa-shield-alt"></i> 100% Secure Login</div>
+            <div><i class="fas fa-globe"></i> Access from Anywhere</div>
+            <div><i class="fas fa-headset"></i> Friendly Support</div>
+          </div>
         </div>
-      </div>
-    </nav>
-    {% block content %} {% endblock %}
-    <script>
-    function goToProfile() {
-      window.location.href = "http://127.0.0.1:8000/profile";
-    }
-    function goToHome() {
-      window.location.href = "http://127.0.0.1:8000/home";
-    }
-    function goToAboutUs() {
-      window.location.href = "http://127.0.0.1:8000/aboutus/";
-    }
-    function goToCreateClass(){
-      window.location.href= "http://127.0.0.1:8000/class_create/"
-    }
-    function goToViewClasses(){
-      window.location.href= "http://127.0.0.1:8000/view_classes/"
-    }
-  </script>
+
+        <div class="footer-main">
+          <div class="footer-logo-section">
+            <div class="footer-logo">GrAdesPro</div>
+            <div class="social-media">
+              <a href="https://www.instagram.com/cookie._.clickers?igsh=MW9jeXJ5eGJhNWhwYw==" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.facebook.com/share/1C4z54J8Aa/" target="_blank"><i class="fab fa-facebook"></i></a>
+              <a href="https://x.com/CookieClickers_?t=MnOjAHhPoC9295a7AFm_0A&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
+              <a href="https://www.youtube.com/@CookieClickers_511" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-columns">
+            <div>
+              <h4>COMMUNITY</h4>
+              <ul>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Forum</a></li>
+                <li><a href="#">Student Hub</a></li>
+                <li><a href="#">Teachers’ Lounge</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>COMPANY</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+              </ul>
+            </div>
+            <div class="footer-contact-us">
+              <h4>CONTACT US</h4>
+              <div>
+                <ul>
+                  <li><p><b>+359 87 604 6141</b> - jeleffv@gmail.com</p></li>
+                  <li><p><b>+359 88 712 9421</b> - gtxr1001@gmail.com</p></li>
+                  <li><p><b>+359 88 712 9421</b> - gtxr1001@gmail.com</p></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <script>
+        function goToProfile() {
+          window.location.href = "http://127.0.0.1:8000/profile";
+        }
+        function goToHome() {
+          window.location.href = "http://127.0.0.1:8000/home";
+        }
+        function goToAboutUs() {
+          window.location.href = "http://127.0.0.1:8000/aboutus/";
+        }
+        function goToCreateClass(){
+          window.location.href= "http://127.0.0.1:8000/class_create/"
+        }
+        function goToViewClasses(){
+          window.location.href= "http://127.0.0.1:8000/view_classes/"
+        }
+      </script>
+    </div>
   </body>
 </html>
