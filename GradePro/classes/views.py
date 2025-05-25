@@ -8,6 +8,7 @@ from .models import School
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+
 # Create your views here.
 def home_page(request):
     if not request.user.is_authenticated:
@@ -56,12 +57,11 @@ def profile_page(request):
     for subject in subjects:
         grades_qs = Grades.objects.filter(student=student_profile, school_class=subject)
         values = []
-        mate_values = [] 
         for grade in grades_qs:
             if isinstance(grade.values, list):
-                mate_values.extend(grade.values)
+                values.extend(grade.values)
             elif isinstance(grade.values, int):
-                mate_values.append(grade.values)
+                values.append(grade.values)
 
         avg = round(sum(values) / len(values), 2) if values else None
         subject_data[subject] = {
@@ -147,6 +147,7 @@ def profile_page(request):
         "school_ranking": school_ranking,
         "school_place": school_place,
     })
+
 def get_class_students(request, class_id):
     try:
         school_class = Class.objects.get(id=class_id)
