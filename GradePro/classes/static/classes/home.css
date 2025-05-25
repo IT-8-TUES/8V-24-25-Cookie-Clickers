@@ -1,10 +1,4 @@
 /* Base Styles - ONLY COLOR CHANGES */
-.page-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
 .welcome-section {
   margin-bottom: 3rem;
@@ -28,6 +22,9 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  padding-bottom:3rem;
+  padding-left:1rem;
+  padding-right:1rem;
 }
 
 /* Feature Cards - ONLY COLOR CHANGES */
@@ -37,6 +34,7 @@
   padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(106, 59, 196, 0.1); /* Purple shadow */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding-bottom:1.5rem;
 }
 
 .feature-card:hover {
