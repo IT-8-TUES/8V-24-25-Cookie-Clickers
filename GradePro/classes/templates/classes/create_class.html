@@ -11,30 +11,20 @@
 {% block content %}
 <div class="container">
     <h2>Create a New Class</h2>
-
     <form method="post">
         {% csrf_token %}
-        
-
         <div>
             <label for="id_subject"><i class="fas fa-book"></i> Subject:</label>
             {{ form.subject }}
         </div>
-          
-
         <div>
             <label for="id_school"><i class="fas fa-school"></i> School:</label>
             {{ form.school }}
-        </div>
-          
-
-  
+        </div>   
         <div>
             <label for="student-search"><i class="fas fa-search"></i> Search Students:</label>
             <input type="text" id="student-search" placeholder="Search by name..." onkeyup="filterStudents()">
         </div>
-
-
         <div id="student-list" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
             {% for student in form.students.field.queryset %}
                 <div class="student-entry" data-id="{{ student.id }}">
@@ -48,18 +38,14 @@
                 </div>
             {% endfor %}
         </div>
-
         <div style="margin-top: 20px;">
             <h4><i class="fas fa-user-check"></i> Selected Students:</h4>
             <ul id="selected-students-list"></ul>
         </div>
-
         <select id="id_students" name="students" multiple style="display: none;"></select>
-
         <button type="submit" class="class-button">Create Class</button>
     </form>
 </div>
-
 <script>
     function filterStudents() {
         const input = document.getElementById('student-search').value.toLowerCase();

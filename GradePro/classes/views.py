@@ -100,7 +100,6 @@ def profile_page(request):
 
     overall_avg = round(sum(overall_values) / len(overall_values), 2) if overall_values else None
 
-    # ─────── CLASS RANKING ───────
     ranking = None
     place = None
     selected_class = None
@@ -134,7 +133,6 @@ def profile_page(request):
                     place = idx
                     break
 
-    # ─────── SCHOOL RANKING ───────
     school_ranking = None
     school_place = None
 
@@ -198,7 +196,6 @@ def get_class_students(request, class_id):
 
 
 def get_student_grades(request, student_id, class_id):
-    # AJAX: return grades for a specific student in a class
     grades = Grades.objects.filter(student_id=student_id, school_class_id=class_id).order_by('-timestamp')
     data = [g.value for g in grades]
     return JsonResponse({"grades": data})
@@ -206,14 +203,12 @@ def get_student_grades(request, student_id, class_id):
 
 @csrf_exempt
 def assign_grade(request):
-    # AJAX POST: assign a new grade to a student
     if request.method == "POST":
         data = json.loads(request.body)
         student_id = data.get('student_id')
         class_id = data.get('class_id')
         grade_value = data.get('grade') 
         print("Received data:", data)
-        # Validate values here if needed
 
         grade = Grades.objects.create(student_id=student_id, school_class_id=class_id, values=[grade_value])
         return JsonResponse({"success": True, "grade": grade.values})
